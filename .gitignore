@@ -21,3 +21,10 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Desktop app update releases (upload to hosting; keep folder structure in git)
+# static/updates/*.exe
+# static/updates/*.yml
+static/updates/*.blockmap
+!static/updates/*.example
+!static/updates/.gitkeep

@@ -1,0 +1,8 @@
+version: 1.0.0
+files:
+  - url: NamasteSoft-Setup-1.0.0.exe
+    sha512: REPLACE_WITH_SHA512_FROM_ELECTRON_BUILDER
+    size: 0
+path: NamasteSoft-Setup-1.0.0.exe
+sha512: REPLACE_WITH_SHA512_FROM_ELECTRON_BUILDER
+releaseDate: '2026-07-30T00:00:00.000Z'
