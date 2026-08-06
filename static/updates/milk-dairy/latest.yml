@@ -1,10 +1,10 @@
-version: 2.0.8
+version: 2.0.9
 files:
-  - url: Milk_Dairy_Management_System_Setup_2.0.8.exe
-    sha512: L2M6cU2GAI6S4iJTwvXbum3PdjT0qvg9ZiIpZuBtTlqztfFpUeWxOPohdDoTMyY4Sf81O3cm7N7aqNOfTqKOeA==
-    size: 97859902
-path: Milk_Dairy_Management_System_Setup_2.0.8.exe
-sha512: L2M6cU2GAI6S4iJTwvXbum3PdjT0qvg9ZiIpZuBtTlqztfFpUeWxOPohdDoTMyY4Sf81O3cm7N7aqNOfTqKOeA==
+  - url: Milk_Dairy_Management_System_Setup_2.0.9.exe
+    sha512: g2crfPEbSeNLYsxfdhB4Sk66/swXWKi4QBedwS7ipf6hevyFCq5hkXrl1y9R8PidIzlO11U5AhExxQjB5vmEbA==
+    size: 97860167
+path: Milk_Dairy_Management_System_Setup_2.0.9.exe
+sha512: g2crfPEbSeNLYsxfdhB4Sk66/swXWKi4QBedwS7ipf6hevyFCq5hkXrl1y9R8PidIzlO11U5AhExxQjB5vmEbA==
 releaseNotes: |-
   Version 2.0.0
 
@@ -14,4 +14,4 @@ releaseNotes: |-
   - Customer drag reorder and monthly report
   - Product sales quantity by unit (kg/ltr/pcs)
   - Database migrations run automatically on update
-releaseDate: '2026-08-03T16:24:11.451Z'
+releaseDate: '2026-08-06T03:11:23.377Z'
