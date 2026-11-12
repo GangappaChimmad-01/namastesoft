@@ -2,201 +2,164 @@
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 
-/* CSS Variables for Design System */
-:root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222.2 84% 4.9%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222.2 84% 4.9%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
-  --radius: 0.5rem;
+/*
+ * Namaste Soft design tokens
+ * Marigold + vermilion (the two palms of the logo) on warm paper, with deep ink.
+ * Text colours were picked to meet WCAG AA on their intended backgrounds:
+ *   ink / muted on paper & sand, *-deep accents for small accent text on paper,
+ *   white / mist on ink.
+ */
+@theme {
+  --color-ink: #1a1633;
+  --color-ink-2: #262147;
+  --color-ink-3: #352f5c;
+  --color-paper: #fbf7f1;
+  --color-sand: #f3ece1;
+  --color-line: #e5dccd;
+  --color-muted: #5b5670;
+  --color-mist: #b9b3cc;
+
+  --color-mari: #f4900c;
+  --color-mari-deep: #a24f00;
+  --color-mari-soft: #fde9cc;
+  --color-verm: #e4472b;
+  --color-verm-deep: #c2361c;
+  --color-leaf: #138a5b;
+  --color-leaf-deep: #0e6e48;
+
+  /* legacy names still used by the toast component */
+  --color-background: #fbf7f1;
+  --color-foreground: #1a1633;
+  --color-border: #e5dccd;
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --animate-marquee: marquee 40s linear infinite;
 }
 
-/* Dark mode */
-.dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 212.7 26.8% 83.9%;
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-/* Base styles */
-* {
-  border-color: hsl(var(--border));
-}
-
-body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
-/* Utility classes */
-.text-gradient {
-  background: linear-gradient(135deg, #10b981, #059669);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.glass-effect {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.card-hover {
-  transition: all 0.3s ease;
-  border-radius: 1.5rem;
-}
-
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-/* Animation classes */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.8s ease-out;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-mari);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-mari);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
+@layer components {
+  /* Small mono label used above section headings: "01 — About" */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .eyebrow::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--color-mari);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    height: 3.25rem;
+    padding: 0 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-ink { background: var(--color-ink); color: #fff; }
+  .btn-ink:hover { background: var(--color-ink-3); }
+  .btn-mari { background: var(--color-mari); color: var(--color-ink); }
+  .btn-mari:hover { background: #ffa531; }
+  .btn-leaf { background: var(--color-leaf); color: #fff; }
+  .btn-leaf:hover { background: var(--color-leaf-deep); }
+  .btn-line { border: 1.5px solid var(--color-ink); color: var(--color-ink); }
+  .btn-line:hover { background: var(--color-ink); color: #fff; }
+  .btn-line-light { border: 1.5px solid rgb(255 255 255 / 0.35); color: #fff; }
+  .btn-line-light:hover { border-color: #fff; background: rgb(255 255 255 / 0.08); }
+
+  .field {
+    width: 100%;
+    border-radius: 0.875rem;
+    border: 1.5px solid var(--color-line);
+    background: #fff;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    color: var(--color-ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field::placeholder { color: #8f8aa3; }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-mari);
+    box-shadow: 0 0 0 4px rgb(244 144 12 / 0.18);
+  }
+
+  /* "Jaali" texture: the brand mark repeated like a carved lattice. Use on ink surfaces. */
+  .jaali {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cg fill='white' transform='translate(15 10) scale(.36) translate(-12 0)'%3E%3Cpath d='M22.1 60H17Q14 60 14 57V35C14 24.5 22 15 32 9C33.55 9.93 35.06 10.95 36.49 12.04Z'/%3E%3Cpath d='M26.3 60L39.84 14.85C45.87 20.43 50 27.46 50 35V57Q50 60 47 60Z'/%3E%3Ccircle cx='40.85' cy='4.5' r='3.6'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 44px 44px;
   }
 }
 
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Scroll reveal. Content is only hidden when JS is running (see app.html), so
+   it stays visible for crawlers and no-JS visitors. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  .animate-marquee { animation: none; }
 }
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Enhanced hover effects */
-.hover-lift {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hover-lift:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-}
-
-/* Gradient animations */
-.gradient-animate {
-  background-size: 200% 200%;
-  animation: gradientShift 4s ease infinite;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Focus ring enhancements */
-.focus-ring:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
-  border-color: rgb(59, 130, 246);
-}
-
-/* Enhanced glass effect */
-.glass-enhanced {
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Loading animations */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Stagger animation delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }

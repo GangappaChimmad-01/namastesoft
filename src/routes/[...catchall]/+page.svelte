@@ -1,13 +1,14 @@
 <script>
-  import { page } from '$app/stores';
-  $: path = $page.url.pathname;
-  console.error("404 Error:", path);
+  import Logo from '$components/brand/Logo.svelte';
+  import Seo from '$components/Seo.svelte';
 </script>
 
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-  <div class="text-center">
-    <h1 class="text-4xl font-bold mb-4">404</h1>
-    <p class="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-    <a href="/" class="text-blue-500 hover:text-blue-700 underline">Return to Home</a>
-  </div>
-</div>
+<Seo title="Page not found · Namaste Soft" description="The page you’re looking for doesn’t exist or has moved." noindex />
+
+<main class="flex min-h-screen flex-col items-center justify-center bg-paper px-4 text-center">
+  <Logo size={56} wordmark={false} />
+  <p class="mt-8 font-mono text-sm uppercase tracking-widest text-muted">Error 404</p>
+  <h1 class="mt-3 text-4xl font-bold text-ink sm:text-5xl">This page took a different path.</h1>
+  <p class="mt-4 max-w-md text-lg text-muted">The page you’re looking for doesn’t exist or has moved.</p>
+  <a href="/" class="btn btn-ink mt-10">Back to home</a>
+</main>

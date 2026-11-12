@@ -1,286 +1,209 @@
 <script lang="ts">
-  import { Mail, Phone, MapPin, Send, MessageCircle, Clock, Globe } from 'lucide-svelte';
-  import Card from '@/components/ui/Card.svelte';
-  import CardContent from '@/components/ui/CardContent.svelte';
-  import Input from '@/components/ui/Input.svelte';
-  import Textarea from '@/components/ui/Textarea.svelte';
-  import Button from '@/components/ui/button.svelte';
-  import { toast } from '@/lib/toastStore.js';
-  import { config } from '@/lib/config.js';
+  import { onDestroy } from 'svelte';
+  import { Mail, Phone, MapPin, Send, MessageCircle, Linkedin, Github } from 'lucide-svelte';
+  import { toast } from '@/lib/toastStore';
+  import { config } from '@/lib/config';
+  import { generateWhatsAppLink } from '@/lib/utils';
+  import { projectType } from '@/lib/contactPrefill';
+  import { reveal } from '@/lib/reveal';
 
-  let formData = {
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  };
+  let form = { name: '', email: '', phone: '', subject: '', message: '' };
 
-  let isSubmitting = false;
+  // A service card's "Discuss" link prefills the project type
+  const unsubscribe = projectType.subscribe((value) => {
+    if (value) form.subject = value;
+  });
+  onDestroy(unsubscribe);
 
-  async function handleSubmit(event: Event) {
+  // The site is static (no backend), so the enquiry is handed to WhatsApp,
+  // pre-written, rather than pretending to "send" it.
+  function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    
-    if (isSubmitting) return;
-    
-    if (!formData.name || !formData.email || !formData.message) {
-      toast({
-        title: 'Validation Error',
-        description: 'Please fill in all required fields.',
-        type: 'error'
-      });
+
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      toast({ title: 'A few details missing', description: 'Please add your name, email and project details.', type: 'error' });
       return;
     }
 
-    isSubmitting = true;
+    const lines = [
+      `Namaste! I'd like to discuss a project.`,
+      ``,
+      `Name: ${form.name.trim()}`,
+      `Email: ${form.email.trim()}`,
+      form.phone.trim() ? `Phone: ${form.phone.trim()}` : null,
+      form.subject.trim() ? `Project type: ${form.subject.trim()}` : null,
+      ``,
+      form.message.trim()
+    ].filter((line) => line !== null);
 
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: 'Message Sent!',
-        description: 'Thank you for your message. We\'ll get back to you soon!',
-        type: 'success'
-      });
-
-      formData = {
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      };
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to send message. Please try again.',
-        type: 'error'
-      });
-    } finally {
-      isSubmitting = false;
-    }
+    window.open(generateWhatsAppLink(config.whatsapp.supportNumber, lines.join('\n')), '_blank', 'noopener');
+    toast({
+      title: 'Opening WhatsApp',
+      description: 'Your message is ready — just press send in WhatsApp.',
+      type: 'success'
+    });
   }
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: 'Email Us',
-      content: 'contact@namastesoft.com',
-      color: 'text-blue-600',
-      bg: 'from-blue-500 to-cyan-500',
-      description: 'Get in touch via email'
-    },
-    {
-      icon: Phone,
-      title: 'Call Us',
-      content: '+91 8150828833',
-      color: 'text-green-600',
-      bg: 'from-green-500 to-teal-500',
-      description: 'Speak with our team'
-    },
-    {
-      icon: MapPin,
-      title: 'Visit Us',
-      content: 'Tech Hub, Innovation Street, Digital City',
-      color: 'text-purple-600',
-      bg: 'from-purple-500 to-pink-500',
-      description: 'Come see us in person'
-    }
-  ];
+  const phones = config.company.phones.map((p) => ({
+    ...p,
+    tel: `tel:+${p.wa}`,
+    whatsapp: generateWhatsAppLink(p.wa, 'Hi! I need assistance with my project.')
+  }));
 
-  const workingHours = [
-    { day: 'Monday - Friday', time: '9:00 AM - 6:00 PM' },
-    { day: 'Saturday', time: '10:00 AM - 4:00 PM' },
-    { day: 'Sunday', time: 'Closed' }
-  ];
-
-  let currentYear = new Date().getFullYear();
+  const workingHours = config.hours;
 </script>
 
-<section id="contact" class="py-24 relative overflow-hidden">
-  <!-- Fixed: Background layers should not block interactions -->
-  <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 pointer-events-none"></div>
-  <div class="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-purple-300/30 rounded-full blur-3xl animate-float pointer-events-none"></div>
-  <div class="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-br from-teal-200/30 to-cyan-300/30 rounded-full blur-3xl animate-float pointer-events-none" style="animation-delay: 2s"></div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center mb-20 animate-fade-in">
-      <div class="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-md rounded-full px-6 py-3 border border-white/40 mb-6">
-        <MessageCircle class="h-4 w-4 text-blue-600" />
-        <span class="text-sm font-medium text-gray-700">Let's Connect</span>
-      </div>
-      <h2 class="text-5xl font-bold text-gray-900 mb-6">
-        Ready to Start Your <span class="text-gradient">Next Project?</span>
-      </h2>
-      <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-        Let's discuss how we can help bring your ideas to life with our expertise in software development,
-        design, and digital innovation.
-      </p>
-    </div>
-
-    <div class="grid lg:grid-cols-3 gap-8 mb-20">
-      {#each contactInfo as info, index}
-        <Card class="text-center card-hover border-0 shadow-xl bg-white/70 backdrop-blur-md animate-scale-in group overflow-hidden" style={`animation-delay: ${index * 0.1}s`}>
-          <CardContent class="p-10 relative">
-            <div class={`absolute inset-0 bg-gradient-to-br ${info.bg} opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none`}></div>
-            <div class="relative z-10">
-              <div class={`w-16 h-16 rounded-2xl bg-gradient-to-br ${info.bg} flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-300 shadow-lg`}>
-                <svelte:component this={info.icon} class="h-8 w-8 text-white" />
-              </div>
-              <h3 class="text-xl font-bold text-gray-900 mb-2">{info.title}</h3>
-              <p class="text-sm text-gray-500 mb-3">{info.description}</p>
-              <p class={`${info.color} font-semibold text-lg`}>{info.content}</p>
-            </div>
-          </CardContent>
-        </Card>
-      {/each}
-    </div>
-
-    <div class="grid lg:grid-cols-3 gap-12">
-      <div class="lg:col-span-2">
-        <Card class="shadow-2xl border-0 bg-white/80 backdrop-blur-md animate-fade-in overflow-hidden">
-          <CardContent class="p-10">
-            <div class="flex items-center space-x-3 mb-8">
-              <div class="w-10 h-10 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                <Send class="h-5 w-5 text-white" />
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900">Send us a Message</h3>
-            </div>
-            <form class="space-y-6" on:submit={handleSubmit}>
-              <div class="grid md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                  <label class="block text-sm font-semibold text-gray-700">Full Name</label>
-                  <Input 
-                    placeholder="Your full name" 
-                    class="h-12 w-full border-gray-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50" 
-                    bind:value={formData.name}
-                    required
-                  />
-                </div>
-                <div class="space-y-2">
-                  <label class="block text-sm font-semibold text-gray-700">Email Address</label>
-                  <Input 
-                    type="email" 
-                    placeholder="your@email.com" 
-                    class="h-12 w-full border-gray-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50" 
-                    bind:value={formData.email}
-                    required
-                  />
-                </div>
-
-                <div class="space-y-2">
-                  <label class="block text-sm font-semibold text-gray-700">Phone Number</label>
-                  <Input 
-                    type="text" 
-                    placeholder="(123) 456-7890" 
-                    class="h-12 w-full border-gray-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50" 
-                    bind:value={formData.Phone}
-                    required
-                  />
-                </div>
-
-                <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700">Project Type</label>
-                    <Input 
-                    placeholder="Web Development, Mobile App, AI/ML, etc." 
-                    class="h-12 w-full border-gray-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50" 
-                    bind:value={formData.subject}
-                    />
-                </div>
-              </div>
-             
-              <div class="space-y-">
-                <label class="block text-sm font-semibold text-gray-700">Project Details</label>
-                <Textarea 
-                  placeholder="Tell us about your project requirements, timeline, and any specific features you need..." 
-                  class="min-h-[110px] w-full resize-none border-gray-200 focus:border-blue-400 focus:ring-blue-400 bg-white/50" 
-                  bind:value={formData.message}
-                  required
-                />
-              </div>
-              <Button 
-                type="submit" 
-                class="flex justify-center items-center gap-2 w-full bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-teal-700 text-white h-12 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                disabled={isSubmitting}
-              >
-                {#if isSubmitting}
-                  Sending...
-                {:else}
-                  Send Message
-                  <Send class="ml-3 h-5 w-5" />
-                {/if}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div class="space-y-8">
-        <!-- Quick Contact Card -->
-        <Card class="shadow-xl border-0 bg-gradient-to-br from-blue-100/95 to-indigo-100/95 backdrop-blur-md animate-fade-in overflow-hidden group">
-          <CardContent class="p-6">
-            <div class="flex items-center space-x-4 mb-4">
-              <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-700 flex items-center justify-center shadow-lg">
-                <MessageCircle class="h-6 w-6 text-white" />
-              </div>
-              <h3 class="text-2xl font-bold text-blue-900">Quick Contact</h3>
-            </div>
-            <p class="text-blue-800 mb-6 font-medium leading-relaxed">Need immediate assistance? Contact us directly through WhatsApp for faster response.</p>
-            <Button 
-              class="flex justify-center items-center gap-2 w-full bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white h-12 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-0 focus:ring-4 focus:ring-blue-400/50"
-              on:click={() => {
-                const whatsappUrl = `https://wa.me/918150828833?text=${encodeURIComponent('Hi! I need assistance with my project.')}`;
-                window.open(whatsappUrl, '_blank');
-                toast({
-                  title: 'Redirecting to WhatsApp',
-                  description: 'Opening WhatsApp for instant support.',
-                  type: 'info'
-                });
-              }}
-            >
-              <MessageCircle class="mr-3 h-6 w-6" />
-              Chat on WhatsApp
-            </Button>
-          </CardContent>
-        </Card>
-
-        <!-- Social Links Card -->
-        <Card class="shadow-xl border-0 bg-blue-50/95 backdrop-blur-md animate-fade-in overflow-hidden group">
-          <CardContent class="p-6">
-            <div class="flex items-center space-x-4 mb-4">
-              <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-700 flex items-center justify-center shadow-lg">
-                <Globe class="h-6 w-6 text-white" />
-              </div>
-              <h3 class="text-2xl font-bold text-blue-900">Follow Us</h3>
-            </div>
-            <p class="text-blue-800 mb-8 font-medium leading-relaxed">Stay updated with our latest projects and insights.</p>
-            <div class="grid grid-cols-2 gap-4">
-              <a 
-                href="https://linkedin.com/company/namastesoft" 
-                target="_blank" 
-                class="bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white py-2 px-4 rounded-xl font-bold text-center transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl border-0 focus:ring-4 focus:ring-blue-400/50"
-              >
-                LinkedIn
-              </a>
-              <a 
-                href="https://github.com/namastesoft" 
-                target="_blank" 
-                class="bg-gradient-to-r from-blue-800 to-indigo-900 hover:from-blue-900 hover:to-indigo-950 text-white py-2 px-4 rounded-xl font-bold text-center transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl border-0 focus:ring-4 focus:ring-blue-400/50"
-              >
-                GitHub
-              </a>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-
-    <div class="text-center mt-20 pt-12 border-t border-gray-200">
-      <div class="glass-effect rounded-2xl p-8 max-w-4xl mx-auto">
-        <p class="text-gray-600 text-lg">
-          <span class="text-gradient font-semibold ml-2">
-            © {currentYear} Namaste Soft. All rights reserved.
-          </span>
+<section id="contact" class="py-24 lg:py-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-14 lg:grid-cols-[1fr_1.25fr] lg:gap-20">
+      <div use:reveal>
+        <p class="eyebrow text-muted">Contact</p>
+        <h2 class="mt-5 text-4xl font-bold leading-[1.05] text-ink sm:text-5xl">
+          Ready to start your next project?
+        </h2>
+        <p class="mt-6 text-lg leading-relaxed text-muted">
+          Tell us about your idea. We’ll get back with questions, honest advice and a clear next step.
         </p>
+
+        <ul class="mt-10 divide-y divide-line border-y border-line">
+          <li>
+            <a href="mailto:{config.company.email}" class="group flex items-center gap-4 py-4 hover:text-verm-deep">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-ink transition-colors group-hover:bg-mari">
+                <Mail class="h-[1.1rem] w-[1.1rem]" />
+              </span>
+              <span>
+                <span class="block font-mono text-[0.7rem] uppercase tracking-wider text-muted">Email</span>
+                <span class="font-semibold">{config.company.email}</span>
+              </span>
+            </a>
+          </li>
+
+          {#each phones as p}
+            <li class="flex items-center gap-4 py-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-ink">
+                <Phone class="h-[1.1rem] w-[1.1rem]" />
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block font-mono text-[0.7rem] uppercase tracking-wider text-muted">Call or WhatsApp</span>
+                <a href={p.tel} class="font-semibold whitespace-nowrap hover:text-verm-deep">{p.display}</a>
+              </span>
+              <span class="flex shrink-0 gap-2">
+                <a
+                  href={p.tel}
+                  class="flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white"
+                  aria-label="Call {p.display}"
+                >
+                  <Phone class="h-4 w-4" />
+                </a>
+                <a
+                  href={p.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex h-10 w-10 items-center justify-center rounded-full bg-leaf text-white transition-colors hover:bg-leaf-deep"
+                  aria-label="WhatsApp {p.display}"
+                >
+                  <MessageCircle class="h-4 w-4" />
+                </a>
+              </span>
+            </li>
+          {/each}
+
+          <li class="flex items-center gap-4 py-4">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-ink">
+              <MapPin class="h-[1.1rem] w-[1.1rem]" />
+            </span>
+            <span>
+              <span class="block font-mono text-[0.7rem] uppercase tracking-wider text-muted">Based in</span>
+              <span class="font-semibold">{config.company.address}</span>
+            </span>
+          </li>
+        </ul>
+
+        <div class="mt-10 grid gap-8 sm:grid-cols-[1fr_auto] sm:gap-12">
+          <div>
+            <h3 class="font-mono text-xs uppercase tracking-wider text-muted">Working hours</h3>
+            <dl class="mt-3 max-w-xs space-y-1.5 text-[0.95rem]">
+              {#each workingHours as h}
+                <div class="flex justify-between gap-4 whitespace-nowrap">
+                  <dt class="text-muted">{h.day}</dt>
+                  <dd class="font-medium {h.time === 'Closed' ? 'text-muted' : 'text-ink'}">{h.time}</dd>
+                </div>
+              {/each}
+            </dl>
+          </div>
+          <div>
+            <h3 class="font-mono text-xs uppercase tracking-wider text-muted">Follow us</h3>
+            <div class="mt-3 flex gap-2">
+              <a
+                href="https://linkedin.com/{config.social.linkedin}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white"
+                aria-label="Namaste Soft on LinkedIn"
+              >
+                <Linkedin class="h-5 w-5" />
+              </a>
+              <a
+                href="https://github.com/{config.social.github}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white"
+                aria-label="Namaste Soft on GitHub"
+              >
+                <Github class="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <form
+        class="rounded-[2rem] border border-line bg-white p-7 shadow-[0_30px_60px_-40px_rgb(26_22_51/0.35)] sm:p-10"
+        on:submit={handleSubmit}
+        novalidate
+        use:reveal={0.1}
+      >
+        <h3 class="text-2xl font-bold text-ink">Send us a message</h3>
+        <p class="mt-1 text-muted">Fields marked * are required.</p>
+
+        <div class="mt-8 grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="contact-name" class="mb-2 block text-sm font-semibold text-ink">Full name *</label>
+            <input id="contact-name" class="field" autocomplete="name" placeholder="Your full name" bind:value={form.name} required />
+          </div>
+          <div>
+            <label for="contact-email" class="mb-2 block text-sm font-semibold text-ink">Email *</label>
+            <input id="contact-email" type="email" class="field" autocomplete="email" placeholder="you@company.com" bind:value={form.email} required />
+          </div>
+          <div>
+            <label for="contact-phone" class="mb-2 block text-sm font-semibold text-ink">Phone</label>
+            <input id="contact-phone" type="tel" class="field" autocomplete="tel" placeholder="+91 98765 43210" bind:value={form.phone} />
+          </div>
+          <div>
+            <label for="contact-subject" class="mb-2 block text-sm font-semibold text-ink">Project type</label>
+            <input id="contact-subject" class="field" placeholder="Website, mobile app, AI…" bind:value={form.subject} />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="contact-message" class="mb-2 block text-sm font-semibold text-ink">Project details *</label>
+            <textarea
+              id="contact-message"
+              class="field min-h-36 resize-y"
+              placeholder="What are you building? Any timeline or must-have features?"
+              bind:value={form.message}
+              required
+            ></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-ink mt-7 w-full">
+          Send via WhatsApp
+          <Send class="h-4 w-4" />
+        </button>
+        <p class="mt-4 text-center text-sm text-muted">
+          Prefer email? Write to
+          <a href="mailto:{config.company.email}" class="font-medium text-ink underline decoration-mari decoration-2 underline-offset-4">{config.company.email}</a>
+        </p>
+      </form>
     </div>
   </div>
 </section>

@@ -1,7 +1,9 @@
 <script lang="ts">
   export let className: string = '';
-  
-  $: classes = `p-6 ${className}`;
+  let klass = '';
+  export { klass as class };
+
+  $: classes = `p-6 ${className} ${klass}`;
 </script>
 
 <div class={classes}>

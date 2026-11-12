@@ -1,109 +1,145 @@
 <script lang="ts">
-  import { ArrowRight, Code, Sparkles, Zap, Star, MessageCircle } from "lucide-svelte";
-  import Button from "@/components/ui/button.svelte";
+  import { ArrowRight, MessageCircle } from 'lucide-svelte';
+  import { config } from '@/lib/config';
+  import { generateWhatsAppLink } from '@/lib/utils';
 
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const openWhatsApp = () => {
-    window.open(
-      "https://wa.me/918150828833?text=Hi! I would like to discuss a project with Namaste Soft.",
-      "_blank"
-    );
-  };
+  const whatsappUrl = generateWhatsAppLink(
+    config.whatsapp.supportNumber,
+    `Hi! I would like to discuss a project with ${config.company.name}.`
+  );
 
   const stats = [
-    { number: "5+", label: "Projects Delivered", icon: Code },
-    { number: "2", label: "Years Experience", icon: Zap },
-    { number: "24/7", label: "Support", icon: Star }
+    { number: config.stats.projects, label: 'Projects delivered' },
+    { number: config.stats.years, label: 'Years of experience' },
+    { number: '24/7', label: 'Support' }
+  ];
+
+  const steps = [
+    { title: 'Requirement gathering', text: 'We understand your goals and define clear deliverables.' },
+    { title: 'Design & development', text: 'Modern UI/UX on a scalable backend, shared with you as we build.' },
+    { title: 'Testing & delivery', text: 'Rigorous testing and performance tuning, delivered on time.' }
+  ];
+
+  const marquee = [
+    'Websites',
+    'Web applications',
+    'Mobile apps',
+    'AI & ML',
+    'WhatsApp automation',
+    'Desktop software',
+    'Technical support'
   ];
 </script>
 
-<section id="home" class="pt-20 min-h-screen flex items-center relative overflow-hidden">
-  <div class="absolute inset-0 gradient-mesh"></div>
-  <div class="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-float"></div>
-  <div class="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-teal-400/20 to-cyan-600/20 rounded-full blur-3xl animate-float" style="animation-delay:2s"></div>
+<section id="home" class="relative overflow-hidden pt-18">
+  <!-- soft warm glow, top right -->
+  <div
+    class="pointer-events-none absolute -right-40 -top-40 h-[36rem] w-[36rem] rounded-full bg-mari-soft opacity-70 blur-3xl"
+    aria-hidden="true"
+  ></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-    <div class="grid lg:grid-cols-2 gap-16 items-center">
-      <!-- LEFT SIDE -->
-      <div class="space-y-10 animate-fade-in">
-        <div class="space-y-8">
-          <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 border border-white/20">
-            <Star class="h-4 w-4 text-yellow-500" />
-            <span class="text-sm font-medium text-gray-700">2 Years Experience • 5+ Successful Projects</span>
+  <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-20 pt-14 sm:px-6 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:px-8 lg:pb-28 lg:pt-24">
+    <div>
+      <!-- The H1 carries the target keyword (small line) and the brand headline (large line). -->
+      <h1 class="text-ink">
+        <span class="eyebrow flex font-normal tracking-[0.08em] text-muted">Software &amp; website development company</span>
+        <span class="mt-6 block text-[clamp(2.75rem,7vw,5.25rem)] font-extrabold leading-[0.98]">
+          Namaste.<br />
+          Let’s build something
+          <span class="relative whitespace-nowrap text-verm">
+            that works.
+            <svg class="absolute -bottom-2 left-0 h-3 w-full" viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M2 9C60 3 140 2 298 7" fill="none" stroke="#F4900C" stroke-width="4" stroke-linecap="round" />
+            </svg>
+          </span>
+        </span>
+      </h1>
+
+      <p class="mt-8 max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
+        We’re a software company building websites, web apps, mobile apps and AI-powered automation for
+        startups and growing businesses, and turning ideas into software people actually use.
+      </p>
+
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+        <a href="#contact" class="btn btn-ink group">
+          Get a free consultation
+          <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
+        </a>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-line">
+          <MessageCircle class="h-5 w-5" />
+          WhatsApp us
+        </a>
+      </div>
+
+      <dl class="mt-14 grid max-w-lg grid-cols-3 divide-x divide-line border-y border-line">
+        {#each stats as stat}
+          <div class="px-4 py-5 first:pl-0">
+            <dt class="sr-only">{stat.label}</dt>
+            <dd class="font-display text-3xl font-bold text-ink sm:text-4xl">{stat.number}</dd>
+            <dd class="mt-1 text-sm text-muted">{stat.label}</dd>
+          </div>
+        {/each}
+      </dl>
+    </div>
+
+    <!-- How we work -->
+    <div class="relative">
+      <div class="relative overflow-hidden rounded-[2rem] bg-ink p-8 text-white shadow-[0_30px_60px_-20px_rgb(26_22_51/0.45)] sm:p-10">
+        <div class="jaali pointer-events-none absolute inset-0 opacity-[0.045]" aria-hidden="true"></div>
+        <div class="relative">
+          <div class="flex items-center justify-between">
+            <h2 class="font-display text-2xl font-bold">How we work</h2>
+            <span class="font-mono text-xs text-mist">3 steps</span>
           </div>
 
-          <h1 class="text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
-            Let's Build
-            <span class="text-gradient block mt-2">Together</span>
-          </h1>
-
-          <p class="text-xl text-gray-600 leading-relaxed max-w-2xl">
-            We specialize in creating cutting-edge digital solutions for startups and enterprises.
-            From websites to AI-powered automation, we transform your ideas into reality.
-          </p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-6">
-          <Button on:click={scrollToContact} class="flex items-center gap-2 neon-border bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-teal-700 text-white px-10 text-lg font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 group">
-            Get Free Consultation
-            <ArrowRight class="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-          </Button>
-
-          <Button on:click={openWhatsApp} variant="outline" size="lg" class="flex items-center justify-center glass-effect border-2 border-white/30 hover:border-green-400/50 px-10 py-6 text-lg font-semibold rounded-2xl transition-all duration-300 hover:bg-green-50 backdrop-blur-md">
-            <MessageCircle class="mr-3 h-5 w-5 text-green-600" />
-            WhatsApp Us
-          </Button>
-        </div>
-
-        <div class="flex items-center justify-between pt-12 max-w-2xl">
-          {#each stats as stat}
-            <div class="text-center group">
-              <div class="flex items-center justify-center mb-2">
-                <svelte:component this={stat.icon} class="h-6 w-6 text-blue-600 mr-2 group-hover:scale-110 transition-transform" />
-                <div class="text-4xl font-bold text-gradient">{stat.number}</div>
-              </div>
-              <div class="text-gray-600 text-sm font-medium">{stat.label}</div>
-            </div>
-          {/each}
-        </div>
-      </div>
-
-      <!-- RIGHT SIDE: OUR PROCESS -->
-      <div class="relative lg:pl-10">
-        <div class="relative z-10 glass-effect rounded-3xl shadow-2xl p-10 animate-fade-in space-y-8">
-          <h2 class="text-2xl font-bold text-gray-800">Our Working Process</h2>
-          <ol class="space-y-6">
-            <li class="flex items-start space-x-4">
-              <div class="w-10 h-10 bg-blue-100 text-blue-600 font-bold flex items-center justify-center rounded-full">1</div>
-              <div>
-                <h3 class="text-lg font-semibold">Requirement Gathering</h3>
-                <p class="text-sm text-gray-600">We understand your goals and define clear deliverables.</p>
-              </div>
-            </li>
-            <li class="flex items-start space-x-4">
-              <div class="w-10 h-10 bg-purple-100 text-purple-600 font-bold flex items-center justify-center rounded-full">2</div>
-              <div>
-                <h3 class="text-lg font-semibold">Design & Development</h3>
-                <p class="text-sm text-gray-600">Our creative team brings your ideas to life with modern UI/UX and scalable backend.</p>
-              </div>
-            </li>
-            <li class="flex items-start space-x-4">
-              <div class="w-10 h-10 bg-green-100 text-green-600 font-bold flex items-center justify-center rounded-full">3</div>
-              <div>
-                <h3 class="text-lg font-semibold">Testing & Delivery</h3>
-                <p class="text-sm text-gray-600">We rigorously test for bugs, optimize performance, and deliver the final product on time.</p>
-              </div>
-            </li>
+          <ol class="mt-8 space-y-0">
+            {#each steps as step, i}
+              <li class="relative flex gap-5 pb-8 last:pb-0">
+                {#if i < steps.length - 1}
+                  <span class="absolute left-[1.15rem] top-11 h-[calc(100%-2.75rem)] w-px bg-ink-3" aria-hidden="true"></span>
+                {/if}
+                <span
+                  class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-sm font-medium
+                    {i === 0 ? 'bg-mari text-ink' : i === 1 ? 'bg-verm text-white' : 'bg-white text-ink'}"
+                >
+                  0{i + 1}
+                </span>
+                <div class="pt-1">
+                  <h3 class="text-lg font-semibold">{step.title}</h3>
+                  <p class="mt-1 text-[0.95rem] leading-relaxed text-mist">{step.text}</p>
+                </div>
+              </li>
+            {/each}
           </ol>
-        </div>
 
-        <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl opacity-20 blur-xl animate-bounce-slow"></div>
-        <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-green-400 to-teal-500 rounded-2xl opacity-20 blur-xl animate-bounce-slow" style="animation-delay:1s"></div>
+          <div class="mt-10 flex items-center gap-3 rounded-2xl bg-ink-2 px-5 py-4 text-sm text-mist">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf opacity-60 motion-reduce:hidden"></span>
+              <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-leaf"></span>
+            </span>
+            Free first consultation, no obligation.
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- service ticker -->
+  <div class="relative overflow-hidden border-y border-ink bg-ink py-4 text-white">
+    <div class="flex w-max animate-marquee">
+      {#each [0, 1] as copy}
+        <ul class="flex shrink-0 items-center" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {#each marquee as item}
+            <li class="flex items-center font-display text-lg font-semibold whitespace-nowrap sm:text-xl">
+              <span class="px-7">{item}</span>
+              <svg viewBox="12 0 40 61" class="h-5 w-auto" aria-hidden="true">
+                <path d="M22.1 60H17Q14 60 14 57V35C14 24.5 22 15 32 9C33.55 9.93 35.06 10.95 36.49 12.04Z" fill="#F4900C" />
+                <path d="M26.3 60L39.84 14.85C45.87 20.43 50 27.46 50 35V57Q50 60 47 60Z" fill="#E4472B" />
+              </svg>
+            </li>
+          {/each}
+        </ul>
+      {/each}
     </div>
   </div>
 </section>

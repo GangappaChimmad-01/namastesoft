@@ -1,86 +1,81 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Menu, X, Sparkles } from 'lucide-svelte';
-  import Button from '@/components/ui/button.svelte';
+  import { Menu, X, ArrowUpRight } from 'lucide-svelte';
+  import Logo from '$components/brand/Logo.svelte';
 
   let isOpen = false;
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    element?.scrollIntoView({ behavior: 'smooth' });
-    isOpen = false;
-  };
+  let scrolled = false;
 
   const menuItems = [
-    { name: 'Home', id: 'home' },
     { name: 'About', id: 'about' },
     { name: 'Services', id: 'services' },
-    // { name: 'Projects', id: 'projects' },
-    { name: 'WhatsApp', id: 'whatsapp-automation' },
-    // { name: 'Testimonials', id: 'testimonials' },
+    { name: 'WhatsApp automation', id: 'whatsapp-automation' },
     { name: 'Contact', id: 'contact' }
   ];
+
+  onMount(() => {
+    const onScroll = () => (scrolled = window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  });
+
+  const close = () => (isOpen = false);
 </script>
 
-<nav class="fixed top-0 w-full glass-effect backdrop-blur-xl z-50 border-b border-white/20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-20">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-purple-600 to-teal-600 flex items-center justify-center animate-glow">
-          <Sparkles class="h-6 w-6 text-white" />
-        </div>
-        <h1 class="text-2xl font-bold text-gradient">Namaste Soft</h1>
-      </div>
+<svelte:window on:keydown={(e) => e.key === 'Escape' && close()} />
 
-      <div class="hidden md:block">
-        <div class="ml-10 flex items-baseline space-x-8">
-          {#each menuItems as item}
-            <button
-              on:click={() => scrollToSection(item.id)}
-              class="relative text-gray-700 hover:text-blue-600 px-4 py-2 text-sm font-semibold transition-all duration-300 group"
-            >
-              {item.name}
-              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
-            </button>
-          {/each}
-        </div>
-      </div>
+<header
+  class="fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300
+    {scrolled || isOpen
+    ? 'border-b border-line bg-paper/90 backdrop-blur-md'
+    : 'border-b border-transparent bg-transparent'}"
+>
+  <nav class="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main">
+    <a href="/" class="-m-1 p-1" on:click={close}>
+      <Logo size={32} /><span class="sr-only"> home</span>
+    </a>
 
-      <div class="md:hidden">
-        <Button
-          variant="ghost"
-          size="sm"
-          on:click={() => (isOpen = !isOpen)}
-          class="hover:bg-white/20"
+    <div class="hidden items-center gap-1 md:flex">
+      {#each menuItems as item}
+        <a
+          href="/#{item.id}"
+          class="rounded-full px-4 py-2 text-[0.95rem] font-medium text-muted transition-colors hover:bg-sand hover:text-ink"
         >
-          {#if isOpen}
-            <X class="h-6 w-6" />
-          {:else}
-            <Menu class="h-6 w-6" />
-          {/if}
-        </Button>
-      </div>
+          {item.name}
+        </a>
+      {/each}
+      <a href="/#contact" class="btn btn-ink ml-3 h-11 px-5 text-[0.95rem]">
+        Start a project
+        <ArrowUpRight class="h-4 w-4" />
+      </a>
     </div>
-  </div>
+
+    <button
+      type="button"
+      class="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-sand md:hidden"
+      aria-expanded={isOpen}
+      aria-controls="mobile-menu"
+      aria-label={isOpen ? 'Close menu' : 'Open menu'}
+      on:click={() => (isOpen = !isOpen)}
+    >
+      {#if isOpen}<X class="h-6 w-6" />{:else}<Menu class="h-6 w-6" />{/if}
+    </button>
+  </nav>
 
   {#if isOpen}
-    <div class="md:hidden glass-effect border-t border-white/20">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        {#each menuItems as item}
-          <button
-            on:click={() => scrollToSection(item.id)}
-            class="block w-full text-left px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-white/20 text-sm font-semibold rounded-lg transition-all duration-300"
-          >
-            {item.name}
-          </button>
-        {/each}
-      </div>
+    <div id="mobile-menu" class="border-t border-line px-4 pb-6 pt-2 md:hidden">
+      {#each menuItems as item}
+        <a
+          href="/#{item.id}"
+          on:click={close}
+          class="flex items-center justify-between border-b border-line py-4 font-display text-xl font-semibold text-ink"
+        >
+          {item.name}
+          <ArrowUpRight class="h-5 w-5 text-mari-deep" />
+        </a>
+      {/each}
+      <a href="/#contact" on:click={close} class="btn btn-ink mt-6 w-full">Start a project</a>
     </div>
   {/if}
-</nav>
-
-<style>
-  nav {
-    transition: background 0.3s ease;
-  }
-</style>
+</header>

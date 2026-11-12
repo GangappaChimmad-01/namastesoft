@@ -61,10 +61,28 @@ src/
 └── app.css             # Global styles and CSS variables
 ```
 
-## 🎨 Customization
+## 🎨 Brand
+
+The mark joins two palms (the *namaste* gesture) as an arch, split by a code slash, with a spark above:
+a greeting and a line of code in one.
+
+| Token | Hex | Use |
+| --- | --- | --- |
+| Ink | `#1A1633` | Text, dark surfaces |
+| Paper | `#FBF7F1` | Page background |
+| Marigold | `#F4900C` | Left palm, spark, highlights |
+| Vermilion | `#E4472B` | Right palm, "soft" in the wordmark |
+
+Type: Bricolage Grotesque (headings), DM Sans (body), JetBrains Mono (labels).
+
+Assets live in `static/brand/` (SVG + PNG logo and mark, ink/white single-colour marks), plus
+`static/favicon.svg|ico`, app icons and `static/og-image.png`. In code, use `src/components/brand/Logo.svelte`.
+To regenerate every asset, see the header of `scripts/build-brand.mjs`.
+
+## 🛠 Customization
 
 ### Colors and Themes
-Edit the CSS variables in `src/app.css` to customize the color scheme.
+Design tokens are defined in the `@theme` block of `src/app.css`.
 
 ### Company Information
 Update the configuration in `src/lib/config.ts` to change company details.

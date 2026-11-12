@@ -1,150 +1,139 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { Globe, Smartphone, Code, Brain, ArrowRight, Sparkles, MessageCircle, Headphones } from 'lucide-svelte';
-  import Button from '@/components/ui/button.svelte';
+  import { Globe, Smartphone, Code, Brain, MessageCircle, Headphones, ArrowRight } from 'lucide-svelte';
+  import { reveal } from '@/lib/reveal';
+  import { discuss } from '@/lib/contactPrefill';
 
   const services = [
     {
       icon: Globe,
-      title: 'Website Development',
-      description: 'Create stunning, responsive websites that captivate your audience and drive business growth with modern design and optimal performance.',
-      features: ['Responsive Design', 'SEO Optimized', 'Fast Loading', 'Mobile-First'],
-      color: 'from-blue-500 to-cyan-500',
-      delay: '0s'
+      title: 'Website development',
+      description: 'Responsive websites that captivate your audience and drive growth, with modern design and fast performance.',
+      features: ['Responsive design', 'SEO optimised', 'Fast loading', 'Mobile-first'],
+      page: '/website-development-company',
+      linkText: 'Explore website development'
     },
     {
       icon: Code,
-      title: 'Web Applications',
-      description: 'Build powerful, scalable web applications with cutting-edge technologies that streamline your business processes.',
-      features: ['Custom Solutions', 'Cloud Integration', 'Real-time Features', 'Secure & Scalable'],
-      color: 'from-purple-500 to-pink-500',
-      delay: '0.1s'
+      title: 'Web applications',
+      description: 'Powerful, scalable web applications built on modern technology to streamline your business processes.',
+      features: ['Custom solutions', 'Cloud integration', 'Real-time features', 'Secure & scalable'],
+      page: '/software-development-company',
+      linkText: 'Explore web app development'
     },
     {
       icon: Smartphone,
-      title: 'Mobile App Development',
-      description: 'Develop native and cross-platform mobile applications that provide seamless user experiences across iOS and Android.',
-      features: ['Native Performance', 'Cross-Platform', 'User-Friendly UI', 'App Store Ready'],
-      color: 'from-green-500 to-teal-500',
-      delay: '0.2s'
+      title: 'Mobile app development',
+      description: 'Native and cross-platform apps that give your users a seamless experience on iOS and Android.',
+      features: ['Native performance', 'Cross-platform', 'User-friendly UI', 'App-store ready'],
+      page: '/mobile-app-development-company',
+      linkText: 'Explore mobile app development'
     },
     {
       icon: Brain,
-      title: 'AI & ML Solutions',
-      description: 'Harness the power of artificial intelligence and machine learning to automate processes and gain valuable insights.',
-      features: ['Custom AI Models', 'Data Analysis', 'Automation', 'Predictive Analytics'],
-      color: 'from-orange-500 to-red-500',
-      delay: '0.3s'
+      title: 'AI & ML solutions',
+      description: 'Put artificial intelligence and machine learning to work automating processes and surfacing insights.',
+      features: ['Custom AI models', 'Data analysis', 'Automation', 'Predictive analytics']
     },
     {
       icon: MessageCircle,
-      title: 'WhatsApp Automation',
-      description: 'Streamline your business communication with intelligent WhatsApp automation solutions for customer support and engagement.',
-      features: ['Auto Responses', 'Lead Generation', 'Customer Support', 'Broadcast Messages'],
-      color: 'from-green-600 to-emerald-600',
-      delay: '0.4s'
+      title: 'WhatsApp automation',
+      description: 'Streamline customer communication with intelligent WhatsApp automation for support and engagement.',
+      features: ['Auto responses', 'Lead generation', 'Customer support', 'Broadcast messages'],
+      page: '/whatsapp-automation',
+      linkText: 'Explore WhatsApp automation'
     },
     {
       icon: Headphones,
-      title: 'Technical Support',
-      description: 'Ongoing technical support and maintenance services to ensure your digital solutions run smoothly 24/7.',
-      features: ['24/7 Support', 'Bug Fixes', 'Performance Optimization', 'Security Updates'],
-      color: 'from-indigo-500 to-purple-600',
-      delay: '0.5s'
+      title: 'Technical support',
+      description: 'Ongoing support and maintenance so your software keeps running smoothly, around the clock.',
+      features: ['24/7 support', 'Bug fixes', 'Performance tuning', 'Security updates']
     }
   ];
-
-    const scrollToContact = () => {
-        const element = document.getElementById("contact");
-        element?.scrollIntoView({ behavior: "smooth" });
-    };
 </script>
 
-<section id="services" class="py-24 relative overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30"></div>
-  <div class="absolute top-20 left-20 w-64 h-64 bg-gradient-to-br from-blue-200/20 to-purple-300/20 rounded-full blur-3xl"></div>
-  <div class="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-br from-teal-200/20 to-cyan-300/20 rounded-full blur-3xl"></div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center mb-20 animate-fade-in">
-      <div class="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-md rounded-full px-6 py-3 border border-white/40 mb-6">
-        <Sparkles class="h-4 w-4 text-blue-600" />
-        <span class="text-sm font-medium text-gray-700">Our Services</span>
+<section id="services" class="bg-sand py-24 lg:py-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-6 lg:grid-cols-2 lg:items-end" use:reveal>
+      <div>
+        <p class="eyebrow text-muted">02 — Services</p>
+        <h2 class="mt-5 text-4xl font-bold leading-[1.05] text-ink sm:text-5xl">
+          End-to-end digital solutions.
+        </h2>
       </div>
-
-      <h2 class="text-5xl font-bold text-gray-900 mb-6">
-        Comprehensive <span class="text-gradient">Digital Solutions</span>
-      </h2>
-      <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-        From startups to enterprises, we deliver end-to-end technology solutions that drive growth
-        and digital transformation for your business.
+      <p class="text-lg leading-relaxed text-muted lg:justify-self-end lg:max-w-md">
+        From first idea to launch and beyond — one team for design, development and support, for startups and
+        established businesses alike.
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {#each services as service, index}
-        <div
-          class="group card-hover border-0 shadow-xl bg-white/70 backdrop-blur-md animate-slide-up overflow-hidden"
-          style={`animation-delay: ${service.delay}`}
+    <ul class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {#each services as service, i}
+        <li
+          class="group relative flex flex-col overflow-hidden rounded-[1.75rem] border border-line bg-paper p-8 transition-all duration-300 hover:-translate-y-1 hover:border-ink/15 hover:bg-white hover:shadow-[0_24px_48px_-24px_rgb(26_22_51/0.25)]"
+          use:reveal={(i % 3) * 0.08}
         >
-          <div class="p-8 h-full flex flex-col relative">
-            <div class={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+          <span
+            class="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-mari to-verm transition-transform duration-500 group-hover:scale-x-100"
+            aria-hidden="true"
+          ></span>
 
-            <div class="relative z-10">
-              <div class={`w-16 h-16 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-500 shadow-lg group-hover:shadow-xl`}>
-                <svelte:component this={service.icon} class="h-8 w-8 text-white" />
-              </div>
-
-              <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
-                {service.title}
-              </h3>
-
-              <p class="text-gray-600 mb-6 flex-grow leading-relaxed">
-                {service.description}
-              </p>
-
-              <div class="space-y-3 mb-8">
-                {#each service.features as feature}
-                  <div class="flex items-center text-sm text-gray-500 group-hover:text-gray-600 transition-colors">
-                    <div class={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color} mr-3 shadow-sm`}></div>
-                    <span class="font-medium">{feature}</span>
-                  </div>
-                {/each}
-              </div>
-
-              <Button
-                variant="ghost"
-                class="w-full justify-between group-hover:bg-blue-50 group-hover:text-blue-600 transition-all duration-300 font-semibold"
-              >
-                Learn More
-                <ArrowRight class="h-4 w-4 group-hover:translate-x-2 transition-transform duration-300" />
-              </Button>
-            </div>
+          <div class="flex items-start justify-between">
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-ink text-mari">
+              <svelte:component this={service.icon} class="h-6 w-6" />
+            </span>
+            <span class="font-mono text-xs text-muted">0{i + 1}</span>
           </div>
-        </div>
-      {/each}
-    </div>
 
-    <div class="text-center mt-16 animate-fade-in">
-      <div class="glass-effect rounded-3xl p-12 max-w-4xl mx-auto">
-        <h3 class="text-3xl font-bold text-gray-900 mb-4">
-          Ready to Start Your <span class="text-gradient">Digital Journey?</span>
-        </h3>
-        <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-          Let's discuss your project requirements and create something amazing together.
-        </p>
+          <h3 class="mt-7 text-2xl font-bold text-ink">{service.title}</h3>
+          <p class="mt-3 leading-relaxed text-muted">{service.description}</p>
 
-        <div class="flex justify-center">
-            <Button
-            on:click={scrollToContact}
-            size="lg"
-            class="flex items-center gap-2 bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 hover:from-blue-700 hover:via-purple-700 hover:to-teal-700 text-white px-10 py-4 text-lg font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1"
+          <ul class="mb-8 mt-6 flex flex-wrap gap-2">
+            {#each service.features as feature}
+              <li class="rounded-full border border-line bg-white px-3 py-1 text-sm text-ink/80">{feature}</li>
+            {/each}
+          </ul>
+
+          <div class="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
+            {#if service.page}
+              <!-- descriptive anchor text: tells Google what the linked page is about -->
+              <a
+                href={service.page}
+                class="inline-flex items-center gap-2 font-semibold text-ink underline decoration-mari decoration-2 underline-offset-[6px] transition-colors hover:text-verm-deep"
+              >
+                {service.linkText}
+                <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            {/if}
+            <button
+              type="button"
+              on:click={() => discuss(service.title)}
+              aria-label="Discuss your project: {service.title}"
+              class="inline-flex items-center gap-2 font-semibold transition-colors
+                {service.page ? 'text-muted hover:text-ink' : 'text-ink underline decoration-mari decoration-2 underline-offset-[6px] hover:text-verm-deep'}"
             >
-            Get Free Consultation
-            <ArrowRight class="ml-3 h-5 w-5" />
-            </Button>
-        </div>
+              Discuss your project
+              {#if !service.page}<ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />{/if}
+            </button>
+          </div>
+        </li>
+      {/each}
+    </ul>
+
+    <div
+      class="relative mt-16 overflow-hidden rounded-[2rem] bg-ink px-8 py-12 text-white sm:px-12 lg:flex lg:items-center lg:justify-between lg:gap-10"
+      use:reveal
+    >
+      <div class="jaali pointer-events-none absolute inset-0 opacity-[0.045]" aria-hidden="true"></div>
+      <div class="relative">
+        <h3 class="text-3xl font-bold sm:text-4xl">Ready to start your digital journey?</h3>
+        <p class="mt-3 max-w-xl text-lg text-mist">
+          Tell us what you’re building. We’ll reply with honest advice and a clear plan.
+        </p>
       </div>
+      <a href="#contact" class="btn btn-mari relative mt-8 shrink-0 lg:mt-0">
+        Get a free consultation
+        <ArrowRight class="h-5 w-5" />
+      </a>
     </div>
   </div>
 </section>
