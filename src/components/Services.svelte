@@ -32,7 +32,9 @@
       icon: Brain,
       title: 'AI & ML solutions',
       description: 'Put artificial intelligence and machine learning to work automating processes and surfacing insights.',
-      features: ['Custom AI models', 'Data analysis', 'Automation', 'Predictive analytics']
+      features: ['Custom AI models', 'Data analysis', 'Automation', 'Predictive analytics'],
+      page: '/ai-development-company',
+      linkText: 'Explore AI & ML solutions'
     },
     {
       icon: MessageCircle,
@@ -57,7 +59,7 @@
       <div>
         <p class="eyebrow text-muted">02 — Services</p>
         <h2 class="mt-5 text-4xl font-bold leading-[1.05] text-ink sm:text-5xl">
-          End-to-end digital solutions.
+          Software development services, end to end.
         </h2>
       </div>
       <p class="text-lg leading-relaxed text-muted lg:justify-self-end lg:max-w-md">

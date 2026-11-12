@@ -100,7 +100,7 @@
                 {/if}
                 <span
                   class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-sm font-medium
-                    {i === 0 ? 'bg-mari text-ink' : i === 1 ? 'bg-verm text-white' : 'bg-white text-ink'}"
+                    {i === 0 ? 'bg-mari text-ink' : i === 1 ? 'bg-verm-deep text-white' : 'bg-white text-ink'}"
                 >
                   0{i + 1}
                 </span>

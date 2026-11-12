@@ -30,10 +30,10 @@ export const servicePages: ServicePage[] = [
     slug: 'website-development-company',
     name: 'Website development',
     serviceType: 'Website development',
-    title: 'Website Development Company in India | Namaste Soft',
+    title: 'Website Design & Development Company in India | Namaste Soft',
     description:
       'Fast, mobile-first, SEO-ready business websites and e-commerce stores for businesses across India, including Bengaluru. Free consultation, fixed quote.',
-    h1: 'Website development company',
+    h1: 'Website design & development company',
     eyebrow: 'Website development services',
     intro: [
       'Your website is often the first conversation a customer has with your business. We design and develop websites that load fast, look great on every phone, and are built to be found on Google.',
@@ -77,10 +77,10 @@ export const servicePages: ServicePage[] = [
     slug: 'software-development-company',
     name: 'Software development',
     serviceType: 'Custom software development',
-    title: 'Software Development Company in India | Namaste Soft',
+    title: 'Custom Software Development Company in India | Namaste Soft',
     description:
       'Custom software and web app development for startups and businesses across India, including Bengaluru: dashboards, CRMs, billing and automation tools.',
-    h1: 'Software development company',
+    h1: 'Custom software development company',
     eyebrow: 'Custom software development',
     intro: [
       'Off-the-shelf software rarely fits the way your business actually works. We build custom software and web applications for startups and growing businesses, designed around your process instead of forcing you to change it.',
@@ -92,7 +92,7 @@ export const servicePages: ServicePage[] = [
       { title: 'Desktop software', text: 'Windows applications with installers and automatic updates.' },
       { title: 'Dashboards & reporting', text: 'Turn scattered spreadsheets into live dashboards and reports.' },
       { title: 'Integrations & automation', text: 'Connect your tools, from payments to messaging, and automate repetitive work.' },
-      { title: 'AI & ML features', text: 'Add data analysis, predictions and intelligent automation where they genuinely help.' }
+      { title: 'MVP development for startups', text: 'Launch a focused first version quickly, learn from real users, then grow it.' }
     ],
     forWho: ['Startups building an MVP', 'Small and medium businesses outgrowing spreadsheets', 'Teams replacing manual, paper-based processes', 'Companies needing a partner for ongoing development'],
     approach: commonApproach,
@@ -118,7 +118,7 @@ export const servicePages: ServicePage[] = [
         a: 'Yes. We provide ongoing support, bug fixes, performance tuning, security updates and new features.'
       }
     ],
-    related: ['website-development-company', 'whatsapp-automation']
+    related: ['ai-development-company', 'website-development-company']
   },
   {
     slug: 'mobile-app-development-company',
@@ -167,18 +167,18 @@ export const servicePages: ServicePage[] = [
     slug: 'whatsapp-automation',
     name: 'WhatsApp automation',
     serviceType: 'WhatsApp Business automation',
-    title: 'WhatsApp Automation Services in India | Namaste Soft',
+    title: 'WhatsApp Chatbot & Automation Services India | Namaste Soft',
     description:
       'WhatsApp automation and chatbots for businesses across India, including Bengaluru: auto-replies, lead capture, bookings and broadcasts. Free consultation.',
-    h1: 'WhatsApp automation services',
+    h1: 'WhatsApp automation & chatbot development',
     eyebrow: 'WhatsApp Business automation',
     intro: [
       'Your customers already message you on WhatsApp. We help businesses answer them instantly, any time of day, with automated replies, chatbots and workflows that capture leads and bookings without someone glued to the phone.',
       'We set up and build on the official WhatsApp Business Platform, connect it to your existing tools, and design conversations that feel helpful, not robotic.'
     ],
     offerings: [
-      { title: 'Auto-replies & FAQs', text: 'Instant answers to common questions about timings, prices, locations and more.' },
-      { title: 'WhatsApp chatbots', text: 'Guided conversations with buttons and menus that resolve queries end to end.' },
+      { title: 'WhatsApp Business API setup', text: 'Get set up on the official WhatsApp Business Platform, with your number, profile and message templates in place.' },
+      { title: 'WhatsApp chatbots', text: 'Instant answers to common questions, with buttons and menus that resolve queries end to end.' },
       { title: 'Lead capture & qualification', text: 'Collect details from new enquiries and pass qualified leads to your team.' },
       { title: 'Bookings & reminders', text: 'Let customers book slots in the chat, with automatic reminders.' },
       { title: 'Broadcast messages', text: 'Send updates and offers to customers who have opted in to hear from you.' },
@@ -204,7 +204,50 @@ export const servicePages: ServicePage[] = [
         a: 'Yes. We can connect WhatsApp to your CRM, website forms, booking system or billing software, so leads and orders flow automatically.'
       }
     ],
-    related: ['software-development-company', 'website-development-company']
+    related: ['ai-development-company', 'software-development-company']
+  },
+  {
+    slug: 'ai-development-company',
+    name: 'AI & ML solutions',
+    serviceType: 'Artificial intelligence and machine learning development',
+    title: 'AI & Machine Learning Development Company India | Namaste Soft',
+    description:
+      'AI and machine learning solutions for businesses across India, including Bengaluru: custom AI models, chatbots, data analysis and automation. Free consultation.',
+    h1: 'AI & machine learning development company',
+    eyebrow: 'AI & ML solutions',
+    intro: [
+      'AI is most useful when it solves a specific problem: answering customers faster, spotting patterns in your data, or taking repetitive work off your team. We build AI and machine learning solutions around the problem, not the hype.',
+      'We start by checking whether AI is the right tool at all. Where it is, we design, build and integrate it into the software and processes you already use.'
+    ],
+    offerings: [
+      { title: 'Custom AI models', text: 'Models trained and tuned for your data and your use case.' },
+      { title: 'AI chatbots & assistants', text: 'Assistants that answer questions and handle routine requests on your website or WhatsApp.' },
+      { title: 'Data analysis', text: 'Turn the data you already collect into clear, useful insights.' },
+      { title: 'Predictive analytics', text: 'Forecast demand, trends and risks so you can plan ahead.' },
+      { title: 'Process automation', text: 'Automate repetitive, rule-heavy work so your team can focus on what matters.' },
+      { title: 'AI integration', text: 'Add AI features to your existing website, app or business software.' }
+    ],
+    forWho: ['Businesses with repetitive manual work to automate', 'Teams sitting on data they are not using', 'Companies wanting faster customer support', 'Startups building an AI-powered product'],
+    approach: commonApproach,
+    faqs: [
+      {
+        q: 'How can AI help my business?',
+        a: 'Common uses include answering customer questions automatically, analysing data to find patterns, forecasting demand, and automating repetitive tasks. We help you find where AI will genuinely save time or money.'
+      },
+      {
+        q: 'Do I need a lot of data to use AI?',
+        a: 'Not always. Some solutions, such as chatbots and document processing, work well with little data of your own. Predictive models usually need more historical data. We assess what you have before recommending an approach.'
+      },
+      {
+        q: 'How much does AI development cost?',
+        a: 'It depends on the problem, the data available and how the solution integrates with your systems. After a free consultation we share a fixed, itemised quote.'
+      },
+      {
+        q: 'Can you add AI to our existing software?',
+        a: 'Yes. We can integrate AI features into your existing website, app or internal tools rather than rebuilding them.'
+      }
+    ],
+    related: ['software-development-company', 'whatsapp-automation']
   }
 ];
 

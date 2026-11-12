@@ -85,7 +85,7 @@
               <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 font-display text-sm font-bold">YB</span>
               <div class="leading-tight">
                 <p class="text-sm font-semibold">Your Business</p>
-                <p class="text-xs text-white/75">Automated assistant · online</p>
+                <p class="text-xs text-white/90">Automated assistant · online</p>
               </div>
             </div>
 

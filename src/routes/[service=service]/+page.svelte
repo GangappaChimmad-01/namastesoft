@@ -51,7 +51,7 @@
         </ol>
       </nav>
 
-      <div class="mt-10 grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:items-end">
+      <div class="mt-10 grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:items-center">
         <div>
           <p class="eyebrow text-muted">{page.eyebrow}</p>
           <h1 class="mt-5 text-[clamp(2.4rem,5.5vw,4.25rem)] font-extrabold leading-[1.02] text-ink">{page.h1}</h1>
@@ -96,7 +96,7 @@
       <div use:reveal>
         <p class="eyebrow text-muted">What we offer</p>
         <h2 class="mt-5 max-w-3xl text-3xl font-bold leading-tight text-ink sm:text-4xl">
-          {page.name} services we provide
+          {page.name}: what’s included
         </h2>
       </div>
       <ul class="mt-12 grid gap-px overflow-hidden rounded-[1.75rem] border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
