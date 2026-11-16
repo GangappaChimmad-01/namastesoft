@@ -108,3 +108,23 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
     }))
   };
 }
+
+export function productListSchema(items: { name: string; description: string; url: string; category: string; operatingSystem: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'SoftwareApplication',
+        name: p.name,
+        description: p.description,
+        url: p.url,
+        applicationCategory: p.category,
+        operatingSystem: p.operatingSystem,
+        publisher: { '@id': ORG_ID }
+      }
+    }))
+  };
+}

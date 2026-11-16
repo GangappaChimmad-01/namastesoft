@@ -3,9 +3,11 @@
   import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-svelte';
   import Logo from '$components/brand/Logo.svelte';
   import { servicePages } from '@/lib/services';
+  import { products } from '@/lib/products';
 
   let isOpen = false;
   let servicesOpen = false;
+  let productsOpen = false;
   let scrolled = false;
 
   const menuItems = [
@@ -24,11 +26,12 @@
   const close = () => {
     isOpen = false;
     servicesOpen = false;
+    productsOpen = false;
   };
 
-  function onFocusOut(event: FocusEvent) {
+  function leftMenu(event: FocusEvent) {
     const next = event.relatedTarget as Node | null;
-    if (!next || !(event.currentTarget as HTMLElement).contains(next)) servicesOpen = false;
+    return !next || !(event.currentTarget as HTMLElement).contains(next);
   }
 </script>
 
@@ -52,14 +55,14 @@
         role="group"
         on:mouseenter={() => (servicesOpen = true)}
         on:mouseleave={() => (servicesOpen = false)}
-        on:focusout={onFocusOut}
+        on:focusout={(e) => leftMenu(e) && (servicesOpen = false)}
       >
         <button
           type="button"
           class="inline-flex items-center gap-1 rounded-full px-4 py-2 text-[0.95rem] font-medium text-muted transition-colors hover:bg-sand hover:text-ink"
           aria-expanded={servicesOpen}
           aria-controls="services-menu"
-          on:click={() => (servicesOpen = !servicesOpen)}
+          on:click={() => ((servicesOpen = !servicesOpen), (productsOpen = false))}
         >
           Services
           <ChevronDown class="h-4 w-4 transition-transform {servicesOpen ? 'rotate-180' : ''}" />
@@ -82,6 +85,50 @@
             <li class="mt-1 border-t border-line pt-1">
               <a href="/#services" on:click={close} class="block rounded-xl px-4 py-3 text-sm text-muted transition-colors hover:bg-sand hover:text-ink">
                 All services
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Products dropdown: same behaviour as Services -->
+      <div
+        class="relative"
+        role="group"
+        on:mouseenter={() => (productsOpen = true)}
+        on:mouseleave={() => (productsOpen = false)}
+        on:focusout={(e) => leftMenu(e) && (productsOpen = false)}
+      >
+        <button
+          type="button"
+          class="inline-flex items-center gap-1 rounded-full px-4 py-2 text-[0.95rem] font-medium text-muted transition-colors hover:bg-sand hover:text-ink"
+          aria-expanded={productsOpen}
+          aria-controls="products-menu"
+          on:click={() => ((productsOpen = !productsOpen), (servicesOpen = false))}
+        >
+          Products
+          <ChevronDown class="h-4 w-4 transition-transform {productsOpen ? 'rotate-180' : ''}" />
+        </button>
+        <div id="products-menu" class="absolute left-0 top-full w-80 pt-2 {productsOpen ? '' : 'hidden'}">
+          <ul class="rounded-2xl border border-line bg-white p-2 shadow-[0_24px_48px_-20px_rgb(26_22_51/0.3)]">
+            {#each products as p}
+              <li>
+                <a
+                  href="/products#{p.id}"
+                  on:click={close}
+                  class="flex items-start justify-between gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-sand"
+                >
+                  <span>
+                    <span class="block text-[0.95rem] font-medium text-ink">{p.name}</span>
+                    <span class="mt-0.5 block text-sm text-muted">{p.tagline}</span>
+                  </span>
+                  <ArrowUpRight class="mt-0.5 h-4 w-4 shrink-0 text-mari-deep" />
+                </a>
+              </li>
+            {/each}
+            <li class="mt-1 border-t border-line pt-1">
+              <a href="/products" on:click={close} class="block rounded-xl px-4 py-3 text-sm text-muted transition-colors hover:bg-sand hover:text-ink">
+                All products
               </a>
             </li>
           </ul>
@@ -121,6 +168,17 @@
         {#each servicePages as p}
           <li>
             <a href="/{p.slug}" on:click={close} class="flex items-center justify-between border-b border-line py-3.5 font-display text-lg font-semibold text-ink">
+              {p.name}
+              <ArrowUpRight class="h-5 w-5 text-mari-deep" />
+            </a>
+          </li>
+        {/each}
+      </ul>
+      <p class="mt-6 font-mono text-xs uppercase tracking-wider text-muted">Products</p>
+      <ul class="mt-1">
+        {#each products as p}
+          <li>
+            <a href="/products#{p.id}" on:click={close} class="flex items-center justify-between border-b border-line py-3.5 font-display text-lg font-semibold text-ink">
               {p.name}
               <ArrowUpRight class="h-5 w-5 text-mari-deep" />
             </a>

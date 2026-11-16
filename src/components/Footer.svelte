@@ -8,6 +8,7 @@
   const company = [
     { name: 'About', href: '/#about' },
     { name: 'Services', href: '/#services' },
+    { name: 'Products', href: '/products' },
     { name: 'FAQ', href: '/#faq' },
     { name: 'Contact', href: '/#contact' }
   ];

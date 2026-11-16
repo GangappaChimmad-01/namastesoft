@@ -7,6 +7,7 @@ export function GET() {
   const lastmod = new Date().toISOString().slice(0, 10); // build date (the site is prerendered)
   const pages = [
     { path: '/', priority: '1.0' },
+    { path: '/products', priority: '0.9' },
     ...servicePages.map((p) => ({ path: `/${p.slug}`, priority: '0.9' }))
   ];
 
