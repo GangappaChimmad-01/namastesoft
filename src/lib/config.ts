@@ -41,5 +41,12 @@ export const config = {
   whatsapp: {
     defaultMessage: 'Hi! I want to know more about your services.',
     supportNumber: '918150828833'
+  },
+
+  // Public IDs (they appear in the page HTML). VITE_GTM_CONTAINER_ID / VITE_GA4_MEASUREMENT_ID override these.
+  // With a GTM container, add GA4 as a tag inside GTM; ga4MeasurementId is then ignored.
+  analytics: {
+    gtmContainerId: 'GTM-M6GX44NF',
+    ga4MeasurementId: ''
   }
 };

@@ -1,5 +1,6 @@
 /**
- * Google Analytics 4 / Google Tag Manager — off unless an ID is configured at build time.
+ * Google Analytics 4 / Google Tag Manager. IDs come from `config.analytics` in config.ts, or from these
+ * build-time environment variables, which take precedence:
  *
  *   VITE_GTM_CONTAINER_ID=GTM-XXXXXXX          preferred: add GA4 and other tags inside GTM
  *   VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX       used only when no GTM container is set
@@ -8,11 +9,14 @@
  * Only one of GTM or GA4 is loaded, so page views are never counted twice.
  * Events carry no personal data: never pass names, emails, phone numbers or message text to track().
  */
+import { config } from './config';
+
 const env = import.meta.env;
 const pick = (value: unknown, pattern: RegExp) => (typeof value === 'string' && pattern.test(value.trim()) ? value.trim() : '');
 
-export const gtmId = pick(env.VITE_GTM_CONTAINER_ID, /^GTM-[A-Z0-9]+$/);
-export const ga4Id = gtmId ? '' : pick(env.VITE_GA4_MEASUREMENT_ID, /^G-[A-Z0-9]+$/);
+// Environment variable first, then the ID in config.ts. Production builds only, so `npm run dev` never sends data.
+export const gtmId = env.PROD ? pick(env.VITE_GTM_CONTAINER_ID || config.analytics.gtmContainerId, /^GTM-[A-Z0-9]+$/) : '';
+export const ga4Id = env.PROD && !gtmId ? pick(env.VITE_GA4_MEASUREMENT_ID || config.analytics.ga4MeasurementId, /^G-[A-Z0-9]+$/) : '';
 export const analyticsEnabled = Boolean(gtmId || ga4Id);
 const analyticsConsent = env.VITE_ANALYTICS_CONSENT === 'denied' ? 'denied' : 'granted';
 

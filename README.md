@@ -108,7 +108,7 @@ Content lives in data files; pages, JSON-LD, the sitemap and `/llms.txt` are all
 - **AI assistants**: `/llms.txt` and `/llms-full.txt`; AI crawlers are explicitly allowed in `static/robots.txt`.
 - **404s**: unknown URLs return a real HTTP 404 via `src/routes/+error.svelte`.
 - **Blog**: nothing is published until a post has `draft: false`; until then `/blog` is a 404 and is not linked or listed.
-- **Analytics**: set `VITE_GTM_CONTAINER_ID` (or `VITE_GA4_MEASUREMENT_ID`) — see `.env.example`. Events: `generate_lead`, `whatsapp_click`, `phone_click`, `email_click`, `consultation_click`, `demo_request_click`, `product_enquiry_click`, `product_site_click`. Add `data-track="event_name"` to any link or button to track it.
+- **Analytics**: Google Tag Manager container `GTM-M6GX44NF`, set in `config.analytics` (`src/lib/config.ts`); env vars in `.env.example` override it. Loads in production builds only. Events: `generate_lead`, `whatsapp_click`, `phone_click`, `email_click`, `consultation_click`, `demo_request_click`, `product_enquiry_click`, `product_site_click`. Add `data-track="event_name"` to any link or button to track it.
 
 ## 🚀 Deployment
 
