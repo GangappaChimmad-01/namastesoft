@@ -6,8 +6,9 @@
   const year = new Date().getFullYear();
 
   const company = [
-    { name: 'About', href: '/#about' },
+    { name: 'About us', href: '/about' },
     { name: 'Services', href: '/#services' },
+    { name: 'Portfolio', href: '/portfolio' },
     { name: 'Products', href: '/products' },
     { name: 'FAQ', href: '/#faq' },
     { name: 'Contact', href: '/#contact' }
@@ -20,8 +21,8 @@
       <div class="max-w-sm">
         <a href="/"><Logo tone="dark" size={36} /><span class="sr-only"> home</span></a>
         <p class="mt-5 leading-relaxed text-mist">
-          Software and website development company building websites, apps, AI and WhatsApp automation for
-          growing businesses.
+          Software development and digital solutions company in Bengaluru, building websites, apps, AI,
+          e-commerce and business automation for businesses across India.
         </p>
       </div>
 

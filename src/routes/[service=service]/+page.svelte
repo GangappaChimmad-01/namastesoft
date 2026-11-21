@@ -10,6 +10,7 @@
   import { projectType } from '@/lib/contactPrefill';
   import { reveal } from '@/lib/reveal';
   import { getServicePage } from '@/lib/services';
+  import { projectsForService } from '@/lib/projects';
   import { organizationSchema, serviceSchema, faqSchema, breadcrumbSchema } from '@/lib/seo';
   import type { PageData } from './$types';
 
@@ -19,6 +20,7 @@
   $: path = `/${page.slug}`;
   $: projectType.set(page.name);
   $: related = page.related.map(getServicePage).filter((p) => p !== undefined);
+  $: work = projectsForService(page.slug);
   $: whatsappUrl = generateWhatsAppLink(
     config.whatsapp.supportNumber,
     `Hi! I'd like to discuss ${page.name.toLowerCase()} with ${config.company.name}.`
@@ -154,6 +156,37 @@
       <FaqList faqs={page.faqs} />
     </div>
   </section>
+
+  {#if work.length}
+    <section class="py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end" use:reveal>
+          <div>
+            <p class="eyebrow text-muted">Our work</p>
+            <h2 class="mt-5 text-3xl font-bold leading-tight text-ink sm:text-4xl">Projects we’ve delivered</h2>
+          </div>
+          <a href="/portfolio" class="font-semibold text-ink underline decoration-mari decoration-2 underline-offset-[6px] hover:text-verm-deep">
+            View full portfolio
+          </a>
+        </div>
+        <ul class="mt-10 grid gap-5 md:grid-cols-2">
+          {#each work as w}
+            <li>
+              <a href="/portfolio#{w.id}" class="group flex h-full flex-col rounded-[1.75rem] border border-line bg-white p-8 transition-colors hover:border-ink">
+                <span class="font-mono text-xs uppercase tracking-wider text-muted">{w.type} · {w.status}</span>
+                <h3 class="mt-3 text-2xl font-bold text-ink">{w.name}</h3>
+                <p class="mt-2 leading-relaxed text-muted">{w.summary}</p>
+                <span class="mt-6 inline-flex items-center gap-2 font-semibold text-ink">
+                  Read the case study
+                  <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </a>
+            </li>
+          {/each}
+        </ul>
+      </div>
+    </section>
+  {/if}
 
   <Contact />
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Globe, Smartphone, Code, Brain, MessageCircle, Headphones, ArrowRight } from 'lucide-svelte';
+  import { Globe, Smartphone, Code, Brain, MessageCircle, Headphones, ArrowRight, ShoppingCart, CreditCard, Server } from 'lucide-svelte';
   import { reveal } from '@/lib/reveal';
   import { discuss } from '@/lib/contactPrefill';
 
@@ -31,8 +31,8 @@
     {
       icon: Brain,
       title: 'AI & ML solutions',
-      description: 'Put artificial intelligence and machine learning to work automating processes and surfacing insights.',
-      features: ['Custom AI models', 'Data analysis', 'Automation', 'Predictive analytics'],
+      description: 'Put AI to work in your business: chatbots, virtual assistants, document processing and AI-assisted workflows.',
+      features: ['OpenAI integration', 'AI chatbots', 'Document processing', 'Intelligent search'],
       page: '/ai-development-company',
       linkText: 'Explore AI & ML solutions'
     },
@@ -43,6 +43,30 @@
       features: ['Auto responses', 'Lead generation', 'Customer support', 'Broadcast messages'],
       page: '/whatsapp-automation',
       linkText: 'Explore WhatsApp automation'
+    },
+    {
+      icon: ShoppingCart,
+      title: 'E-commerce development',
+      description: 'Custom online stores with catalogue, cart, checkout, payments, orders and an admin dashboard.',
+      features: ['Product catalogue', 'Cart & checkout', 'Order management', 'Coupons & reports'],
+      page: '/ecommerce-development-company',
+      linkText: 'Explore e-commerce development'
+    },
+    {
+      icon: CreditCard,
+      title: 'Payment gateway integration',
+      description: 'Accept UPI, cards, net banking and wallets through Razorpay, Cashfree or Stripe, with subscriptions and refunds.',
+      features: ['Razorpay', 'Cashfree', 'Stripe', 'UPI & subscriptions'],
+      page: '/payment-gateway-integration',
+      linkText: 'Explore payment integration'
+    },
+    {
+      icon: Server,
+      title: 'Cloud, hosting & DevOps',
+      description: 'VPS and cloud servers, Docker deployments, CI/CD, domain, DNS and SSL, set up and maintained.',
+      features: ['VPS & Linux', 'Docker', 'CI/CD', 'DNS & SSL'],
+      page: '/cloud-devops-services',
+      linkText: 'Explore cloud & DevOps'
     },
     {
       icon: Headphones,
@@ -83,7 +107,7 @@
             <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-ink text-mari">
               <svelte:component this={service.icon} class="h-6 w-6" />
             </span>
-            <span class="font-mono text-xs text-muted">0{i + 1}</span>
+            <span class="font-mono text-xs text-muted">{String(i + 1).padStart(2, '0')}</span>
           </div>
 
           <h3 class="mt-7 text-2xl font-bold text-ink">{service.title}</h3>

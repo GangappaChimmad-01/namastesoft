@@ -25,7 +25,7 @@ export const products: Product[] = [
     description:
       'Shop billing that keeps working when the internet doesn’t. Barcode and voice billing, GST-ready receipts, stock, customer credit and reports — in the browser, on phones and as a Windows app.',
     url: 'https://mart.namastesoft.com/',
-    audience: ['Supermarkets', 'Kirana & provision stores'],
+    audience: ['Supermarkets', 'Kirana & provision stores', 'Bakeries & pharmacies', 'Textile & hardware stores', 'Restaurants & other retailers'],
     features: [
       { title: 'Works offline', text: 'Bills are saved on the device and synced to the cloud when the connection returns.' },
       { title: 'Barcode & voice billing', text: 'Scan, search or speak items — voice billing in English and Kannada.' },

@@ -40,6 +40,12 @@
             meets them head-on.
           </p>
         </div>
+        <a
+          href="/about"
+          class="mt-8 inline-flex items-center gap-2 font-semibold text-ink underline decoration-mari decoration-2 underline-offset-[6px] hover:text-verm-deep"
+        >
+          More about our company, technology and process
+        </a>
       </div>
 
       <dl class="grid grid-cols-2 self-end overflow-hidden rounded-[1.75rem] border border-line bg-white" use:reveal={0.1}>

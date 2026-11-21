@@ -1,4 +1,7 @@
 import { config } from './config';
+import { profile, allTechnologies } from './profile';
+import { servicePages } from './services';
+import type { Project } from './projects';
 
 const { siteUrl, company, social } = config;
 
@@ -18,7 +21,8 @@ export function organizationSchema() {
     name: company.name,
     alternateName: 'NamasteSoft',
     description:
-      'Software and website development company based in Bengaluru, building websites, web applications, mobile apps, AI solutions and WhatsApp automation for businesses across India.',
+      'Software development and digital solutions company based in Bengaluru, India, building websites, custom web applications, mobile apps, enterprise software, AI-powered solutions, e-commerce, payment integrations and business automation for startups, SMEs and enterprises.',
+    slogan: profile.slogan,
     url: absolute('/'),
     logo: absolute('/brand/namastesoft-logo.png'),
     image: absolute('/og-image.png'),
@@ -47,15 +51,15 @@ export function organizationSchema() {
       availableLanguage: ['English']
     })),
     sameAs: [`https://www.linkedin.com/${social.linkedin}`, `https://github.com/${social.github}`],
-    knowsAbout: [
-      'Website development',
-      'Web application development',
-      'Mobile app development',
-      'Custom software development',
-      'WhatsApp Business API automation',
-      'Artificial intelligence',
-      'Machine learning'
-    ]
+    knowsAbout: [...profile.capabilities.map((c) => c.name), ...allTechnologies],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Software development services',
+      itemListElement: servicePages.map((p) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: p.h1, serviceType: p.serviceType, url: absolute(`/${p.slug}`) }
+      }))
+    }
   };
 }
 
@@ -126,5 +130,46 @@ export function productListSchema(items: { name: string; description: string; ur
         publisher: { '@id': ORG_ID }
       }
     }))
+  };
+}
+
+export function aboutPageSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${absolute('/about')}#webpage`,
+    url: absolute('/about'),
+    name: `About ${company.name}`,
+    description: profile.overview[0],
+    inLanguage: 'en-IN',
+    isPartOf: { '@id': `${siteUrl}/#website` },
+    about: { '@id': ORG_ID },
+    mainEntity: { '@id': ORG_ID }
+  };
+}
+
+/** Portfolio case studies. Android apps are SoftwareApplications; websites and web apps are CreativeWorks. */
+export function portfolioSchema(items: Project[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${company.name} portfolio`,
+    itemListElement: items.map((p, i) => {
+      const isApp = p.platform === 'Android';
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': isApp ? 'SoftwareApplication' : 'CreativeWork',
+          name: p.name,
+          description: p.overview,
+          url: p.url ?? absolute(`/portfolio#${p.id}`),
+          ...(isApp ? { applicationCategory: 'MobileApplication', operatingSystem: 'Android' } : { genre: p.type }),
+          keywords: p.stack.map((s) => s.value).join(', '),
+          creator: { '@id': ORG_ID },
+          ...(p.client ? { sourceOrganization: { '@type': 'Organization', name: p.client } } : {})
+        }
+      };
+    })
   };
 }
