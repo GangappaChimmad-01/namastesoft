@@ -4,6 +4,7 @@
   import Logo from '$components/brand/Logo.svelte';
   import { servicePages } from '@/lib/services';
   import { products } from '@/lib/products';
+  import { posts } from '@/lib/blog';
 
   let isOpen = false;
   let servicesOpen = false;
@@ -13,7 +14,8 @@
   const menuItems = [
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/#contact' }
+    ...(posts.length ? [{ name: 'Blog', href: '/blog' }] : []),
+    { name: 'Contact', href: '/contact' }
   ];
 
   onMount(() => {
@@ -114,7 +116,7 @@
             {#each products as p}
               <li>
                 <a
-                  href="/products#{p.id}"
+                  href="/products/{p.id}"
                   on:click={close}
                   class="flex items-start justify-between gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-sand"
                 >
@@ -143,7 +145,7 @@
           {item.name}
         </a>
       {/each}
-      <a href="/#contact" class="btn btn-ink ml-3 h-11 px-5 text-[0.95rem]">
+      <a href="/#contact" class="btn btn-ink ml-3 h-11 px-5 text-[0.95rem]" data-track="consultation_click">
         Start a project
         <ArrowUpRight class="h-4 w-4" />
       </a>
@@ -178,7 +180,7 @@
       <ul class="mt-1">
         {#each products as p}
           <li>
-            <a href="/products#{p.id}" on:click={close} class="flex items-center justify-between border-b border-line py-3.5 font-display text-lg font-semibold text-ink">
+            <a href="/products/{p.id}" on:click={close} class="flex items-center justify-between border-b border-line py-3.5 font-display text-lg font-semibold text-ink">
               {p.name}
               <ArrowUpRight class="h-5 w-5 text-mari-deep" />
             </a>
@@ -195,7 +197,7 @@
           </li>
         {/each}
       </ul>
-      <a href="/#contact" on:click={close} class="btn btn-ink mt-6 w-full">Start a project</a>
+      <a href="/#contact" on:click={close} class="btn btn-ink mt-6 w-full" data-track="consultation_click">Start a project</a>
     </div>
   {/if}
 </header>

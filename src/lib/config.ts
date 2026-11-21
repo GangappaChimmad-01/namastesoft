@@ -30,10 +30,12 @@ export const config = {
     { day: 'Sunday', time: 'Closed', schema: null }
   ],
 
+  // Only real, verified profiles: they are linked from the site and listed in schema.org `sameAs`.
+  // Leave a value empty to hide it. (github.com/namastesoft returned 404 when checked, so it is off.)
   social: {
     twitter: '@namaste_soft',
     linkedin: 'company/namastesoft',
-    github: 'namastesoft'
+    github: ''
   },
 
   whatsapp: {

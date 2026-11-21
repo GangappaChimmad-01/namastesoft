@@ -6,6 +6,7 @@
   import { generateWhatsAppLink } from '@/lib/utils';
   import { projectType } from '@/lib/contactPrefill';
   import { reveal } from '@/lib/reveal';
+  import { track } from '@/lib/analytics';
 
   let form = { name: '', email: '', phone: '', subject: '', message: '' };
 
@@ -37,6 +38,8 @@
     ].filter((line) => line !== null);
 
     window.open(generateWhatsAppLink(config.whatsapp.supportNumber, lines.join('\n')), '_blank', 'noopener');
+    // Fired only after validation passes. No form contents are sent.
+    track('generate_lead', { form_name: 'contact', lead_channel: 'whatsapp' });
     toast({
       title: 'Opening WhatsApp',
       description: 'Your message is ready — just press send in WhatsApp.',
@@ -135,7 +138,7 @@
             <h3 class="font-mono text-xs uppercase tracking-wider text-muted">Follow us</h3>
             <div class="mt-3 flex gap-2">
               <a
-                href="https://linkedin.com/{config.social.linkedin}"
+                href="https://www.linkedin.com/{config.social.linkedin}"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white"
@@ -143,15 +146,17 @@
               >
                 <Linkedin class="h-5 w-5" />
               </a>
-              <a
-                href="https://github.com/{config.social.github}"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white"
-                aria-label="Namaste Soft on GitHub"
-              >
-                <Github class="h-5 w-5" />
-              </a>
+              {#if config.social.github}
+                <a
+                  href="https://github.com/{config.social.github}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white"
+                  aria-label="Namaste Soft on GitHub"
+                >
+                  <Github class="h-5 w-5" />
+                </a>
+              {/if}
             </div>
           </div>
         </div>

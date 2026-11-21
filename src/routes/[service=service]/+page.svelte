@@ -11,6 +11,7 @@
   import { reveal } from '@/lib/reveal';
   import { getServicePage } from '@/lib/services';
   import { projectsForService } from '@/lib/projects';
+  import { products } from '@/lib/products';
   import { organizationSchema, serviceSchema, faqSchema, breadcrumbSchema } from '@/lib/seo';
   import type { PageData } from './$types';
 
@@ -21,6 +22,7 @@
   $: projectType.set(page.name);
   $: related = page.related.map(getServicePage).filter((p) => p !== undefined);
   $: work = projectsForService(page.slug);
+  $: relatedProducts = products.filter((p) => p.services.includes(page.slug));
   $: whatsappUrl = generateWhatsAppLink(
     config.whatsapp.supportNumber,
     `Hi! I'd like to discuss ${page.name.toLowerCase()} with ${config.company.name}.`
@@ -61,7 +63,7 @@
             {#each page.intro as p}<p>{p}</p>{/each}
           </div>
           <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a href="#contact" class="btn btn-ink group">
+            <a href="#contact" class="btn btn-ink group" data-track="consultation_click">
               Get a free consultation
               <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </a>
@@ -93,6 +95,23 @@
     </div>
   </section>
 
+  <section class="border-t border-line py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div use:reveal>
+        <p class="eyebrow text-muted">Problems we solve</p>
+        <h2 class="mt-5 max-w-3xl text-3xl font-bold leading-tight text-ink sm:text-4xl">Sound familiar?</h2>
+      </div>
+      <ul class="mt-10 grid gap-5 md:grid-cols-3">
+        {#each page.problems as pr, i}
+          <li class="rounded-[1.75rem] border border-line bg-white p-8" use:reveal={i * 0.08}>
+            <h3 class="text-xl font-bold text-ink">{pr.title}</h3>
+            <p class="mt-2 leading-relaxed text-muted">{pr.text}</p>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </section>
+
   <section class="bg-sand py-20 lg:py-28">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div use:reveal>
@@ -110,6 +129,15 @@
           </li>
         {/each}
       </ul>
+
+      <div class="mt-12 grid gap-4 md:grid-cols-[14rem_1fr] md:items-baseline">
+        <h3 class="font-display text-lg font-semibold text-ink">Technologies we use</h3>
+        <ul class="flex flex-wrap gap-2">
+          {#each page.technologies as t}
+            <li class="rounded-full border border-line bg-white px-3 py-1 text-sm text-ink/80">{t}</li>
+          {/each}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -192,8 +220,19 @@
 
   <section class="border-t border-line py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h2 class="font-mono text-xs uppercase tracking-wider text-muted">Related services</h2>
+      <h2 class="font-mono text-xs uppercase tracking-wider text-muted">{relatedProducts.length ? 'Related services & products' : 'Related services'}</h2>
       <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+        {#each relatedProducts as rp}
+          <li>
+            <a
+              href="/products/{rp.id}"
+              class="group flex items-center justify-between rounded-2xl border border-line bg-white px-6 py-5 font-display text-lg font-semibold text-ink transition-colors hover:border-ink"
+            >
+              {rp.name}: {rp.tagline}
+              <ArrowRight class="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
+            </a>
+          </li>
+        {/each}
         {#each related as r}
           <li>
             <a

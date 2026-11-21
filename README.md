@@ -90,6 +90,26 @@ Update the configuration in `src/lib/config.ts` to change company details.
 ### WhatsApp Integration
 The WhatsApp functionality automatically uses the phone number from the config file.
 
+## 🔎 SEO, AI crawlers & analytics
+
+Content lives in data files; pages, JSON-LD, the sitemap and `/llms.txt` are all generated from them.
+
+| To change | Edit |
+| --- | --- |
+| Company facts (overview, tech stack, industries, process) | `src/lib/profile.ts` |
+| Service landing pages (title, description, FAQ, …) | `src/lib/services.ts` |
+| Products (`/products/<id>`, incl. optional screenshots) | `src/lib/products.ts` |
+| Portfolio projects | `src/lib/projects.ts` |
+| Phone, email, hours, social profiles | `src/lib/config.ts` |
+| Blog posts | `src/content/blog/<slug>.svelte` (copy `_template.svelte`) |
+
+- **Per-page metadata**: `src/components/Seo.svelte` (title, description, canonical, Open Graph, Twitter, JSON-LD). Schema builders are in `src/lib/seo.ts`.
+- **Sitemap**: `/sitemap.xml`, built from the data files. `lastmod` comes from git history and is omitted on shallow clones rather than guessed.
+- **AI assistants**: `/llms.txt` and `/llms-full.txt`; AI crawlers are explicitly allowed in `static/robots.txt`.
+- **404s**: unknown URLs return a real HTTP 404 via `src/routes/+error.svelte`.
+- **Blog**: nothing is published until a post has `draft: false`; until then `/blog` is a 404 and is not linked or listed.
+- **Analytics**: set `VITE_GTM_CONTAINER_ID` (or `VITE_GA4_MEASUREMENT_ID`) — see `.env.example`. Events: `generate_lead`, `whatsapp_click`, `phone_click`, `email_click`, `consultation_click`, `demo_request_click`, `product_enquiry_click`, `product_site_click`. Add `data-track="event_name"` to any link or button to track it.
+
 ## 🚀 Deployment
 
 ### Build for Production

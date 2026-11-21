@@ -8,6 +8,7 @@ import { profile } from './profile';
 import { servicePages } from './services';
 import { products } from './products';
 import { projects } from './projects';
+import { posts } from './blog';
 import { absolute } from './seo';
 
 const { company } = config;
@@ -25,6 +26,9 @@ const header = () => `# ${company.name}
 - Experience: ${config.stats.years} years, ${config.stats.projects} projects delivered
 - Engagement: free first consultation, then a fixed, itemised quote`;
 
+const blogSection = () =>
+  posts.length ? `\n## Blog\n\n${posts.map((p) => `- [${p.title}](${absolute(`/blog/${p.slug}`)}): ${p.description}`).join('\n')}\n` : '';
+
 export function llmsTxt() {
   return `${header()}
 
@@ -34,7 +38,7 @@ ${servicePages.map((p) => `- [${p.h1}](${absolute(`/${p.slug}`)}): ${p.descripti
 
 ## Products
 
-${products.map((p) => `- [${p.name}](${absolute(`/products#${p.id}`)}): ${p.tagline}. ${p.description} Live at ${p.url}`).join('\n')}
+${products.map((p) => `- [${p.name}](${absolute(`/products/${p.id}`)}):${p.tagline}. ${p.description} Live at ${p.url}`).join('\n')}
 
 ## Portfolio
 
@@ -45,7 +49,8 @@ ${projects.map((p) => `- [${p.name}](${absolute(`/portfolio#${p.id}`)}): ${p.sum
 - [About ${company.name}](${absolute('/about')}): Overview, vision, mission, technology stack, industries, development process and engagement models.
 - [Portfolio](${absolute('/portfolio')}): Selected live projects with features and technology stack.
 - [Products](${absolute('/products')}): Ready-to-use software built and run by ${company.name}.
-
+- [Contact](${absolute('/contact')}): Phone, WhatsApp, email, location and working hours.
+${blogSection()}
 ## Optional
 
 - [Full company profile](${absolute('/llms-full.txt')}): Every service capability, technology, industry and project in one plain-text document.
@@ -106,10 +111,13 @@ ${products
 
 ${p.tagline}. ${p.description}
 
+- Page: ${absolute(`/products/${p.id}`)}
 - Website: ${p.url}
 - Platforms: ${p.platforms.join(', ')}
 - Made for: ${p.audience.join(', ')}
-${titled(p.features)}`
+${titled(p.features)}
+
+${p.faqs.map((f) => `**${f.q}**\n${f.a}`).join('\n\n')}`
   )
   .join('\n\n')}
 

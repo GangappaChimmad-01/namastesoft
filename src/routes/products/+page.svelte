@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { ArrowUpRight, Check, ChevronRight, MonitorSmartphone } from 'lucide-svelte';
+  import { ArrowRight, ArrowUpRight, Check, ChevronRight, MonitorSmartphone } from 'lucide-svelte';
   import Navigation from '$components/Navigation.svelte';
   import Contact from '$components/Contact.svelte';
   import Footer from '$components/Footer.svelte';
   import Seo from '$components/Seo.svelte';
   import { reveal } from '@/lib/reveal';
   import { products } from '@/lib/products';
-  import { organizationSchema, productListSchema, breadcrumbSchema } from '@/lib/seo';
+  import { organizationSchema, productListSchema, breadcrumbSchema, absolute } from '@/lib/seo';
 
   const schema = [
     organizationSchema(),
-    productListSchema(products),
+    productListSchema(products.map((p) => ({ ...p, url: absolute(`/products/${p.id}`) }))),
     breadcrumbSchema([
       { name: 'Home', path: '/' },
       { name: 'Products', path: '/products' }
@@ -21,8 +21,8 @@
 </script>
 
 <Seo
-  title="Our Products: NamasteBill POS & DBHub | Namaste Soft"
-  description="Ready-to-use software from Namaste Soft: NamasteBill POS billing for supermarkets and kirana stores, and DBHub for developers to browse, edit and alter their databases."
+  title="Software Products: NamasteBill POS & DBHub | Namaste Soft"
+  description="Ready-to-use software from Namaste Soft: NamasteBill POS billing for supermarkets and retail shops, and DBHub, a browser-based IDE for your databases."
   path="/products"
   {schema}
 />
@@ -77,10 +77,16 @@
             <span>{p.platforms.join(' · ')}</span>
           </div>
 
-          <a href={p.url} target="_blank" rel="noopener" class="btn btn-ink group mt-8">
-            Visit {hostOf(p.url)}
-            <ArrowUpRight class="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </a>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="/products/{p.id}" class="btn btn-ink group">
+              {p.name} features &amp; FAQ
+              <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </a>
+            <a href={p.url} target="_blank" rel="noopener" class="btn btn-line group" data-track="product_site_click" data-track-label={p.name}>
+              Visit {hostOf(p.url)}
+              <ArrowUpRight class="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          </div>
 
           <h3 class="mt-10 font-mono text-xs uppercase tracking-wider text-muted">Made for</h3>
           <ul class="mt-4 space-y-3">

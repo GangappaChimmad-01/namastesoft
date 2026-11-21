@@ -26,6 +26,9 @@
     'Mobile apps',
     'AI & ML',
     'WhatsApp automation',
+    'E-commerce',
+    'Payment integration',
+    'Cloud & DevOps',
     'Desktop software',
     'Technical support'
   ];
@@ -56,12 +59,13 @@
       </h1>
 
       <p class="mt-8 max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
-        We’re a software company building websites, web apps, mobile apps and AI-powered automation for
-        startups and growing businesses, and turning ideas into software people actually use.
+        We’re a software development company in Bengaluru building websites, web apps, mobile apps and
+        AI-powered automation for startups and growing businesses across India, and turning ideas into software
+        people actually use.
       </p>
 
       <div class="mt-10 flex flex-col gap-3 sm:flex-row">
-        <a href="#contact" class="btn btn-ink group">
+        <a href="#contact" class="btn btn-ink group" data-track="consultation_click">
           Get a free consultation
           <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
         </a>

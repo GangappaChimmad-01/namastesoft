@@ -15,8 +15,8 @@
 </script>
 
 <Seo
-  title="Software & Website Development Company in India | Namaste Soft"
-  description="Software & website development for businesses across India, including Bengaluru. Web apps, mobile apps, AI and WhatsApp automation. Free consultation."
+  title="Software Development Company in India | Namaste Soft"
+  description="Bengaluru-based Namaste Soft builds custom software, websites, mobile apps, AI solutions and business automation for startups and growing businesses across India."
   path="/"
   {schema}
 />

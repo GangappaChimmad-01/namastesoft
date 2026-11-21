@@ -11,7 +11,9 @@ export type ServicePage = {
   h1: string;
   eyebrow: string;
   intro: string[];
+  problems: { title: string; text: string }[]; // business problems the service solves
   offerings: { title: string; text: string }[];
+  technologies: string[];
   forWho: string[];
   approach: { title: string; text: string }[];
   faqs: { q: string; a: string }[];
@@ -30,15 +32,21 @@ export const servicePages: ServicePage[] = [
     slug: 'website-development-company',
     name: 'Website development',
     serviceType: 'Website development',
-    title: 'Website Design & Development Company in India | Namaste Soft',
+    title: 'Website Development Company in India | Namaste Soft',
     description:
-      'Fast, mobile-first, SEO-ready business websites and e-commerce stores for businesses across India, including Bengaluru. Free consultation, fixed quote.',
+      'Build fast, responsive and SEO-friendly business websites with Namaste Soft in Bengaluru. Custom website design, development and ongoing support across India.',
     h1: 'Website design & development company',
     eyebrow: 'Website development services',
     intro: [
       'Your website is often the first conversation a customer has with your business. We design and develop websites that load fast, look great on every phone, and are built to be found on Google.',
       'Whether you need your first business website, a redesign of an old one, or an online store, our website developers handle everything from design and content structure to launch and ongoing support.'
     ],
+    problems: [
+      { title: 'Customers can’t find you on Google', text: 'Slow pages and weak structure rarely rank. We build with clean HTML, fast loading, metadata, schema and a sitemap from day one.' },
+      { title: 'An outdated site that loses enquiries', text: 'Old designs that break on phones send visitors away. We design mobile-first, around one clear call to action.' },
+      { title: 'Relying only on social media', text: 'Social reach depends on someone else’s algorithm. Your own website is an asset you control and customers can find.' }
+    ],
+    technologies: ['React.js', 'Next.js', 'TypeScript', 'Tailwind CSS', 'HTML5 & CSS3', 'PHP & Laravel', 'Vercel', 'Cloudflare'],
     offerings: [
       { title: 'Business websites', text: 'Professional company websites that explain what you do and turn visitors into enquiries.' },
       { title: 'E-commerce websites', text: 'Online stores with product catalogues, carts, payments and order management.' },
@@ -79,13 +87,19 @@ export const servicePages: ServicePage[] = [
     serviceType: 'Custom software development',
     title: 'Custom Software Development Company in India | Namaste Soft',
     description:
-      'Custom software and web app development for startups and businesses across India, including Bengaluru: dashboards, CRMs, billing and automation tools.',
+      'Namaste Soft develops custom business software, web applications, CRM, ERP, POS and scalable digital solutions for growing businesses across India.',
     h1: 'Custom software development company',
     eyebrow: 'Custom software development',
     intro: [
       'Off-the-shelf software rarely fits the way your business actually works. We build custom software and web applications for startups and growing businesses, designed around your process instead of forcing you to change it.',
       'From internal tools and dashboards to customer-facing platforms and desktop applications, we take your idea from requirements to a reliable, scalable product, and keep supporting it after launch.'
     ],
+    problems: [
+      { title: 'Work runs on spreadsheets and paper', text: 'Manual records are slow and error-prone. We turn them into software with proper data, roles and reports.' },
+      { title: 'Off-the-shelf tools don’t fit', text: 'Generic software forces you to change how you work. Custom software follows your process instead.' },
+      { title: 'Disconnected systems and double entry', text: 'We connect billing, inventory, CRM and messaging through APIs so data is entered once.' }
+    ],
+    technologies: ['React.js', 'Next.js', 'TypeScript', 'Go (Golang)', 'Node.js', 'NestJS', 'Python', 'PHP & Laravel', 'PostgreSQL', 'MySQL', 'Redis', 'Prisma', 'Drizzle ORM'],
     offerings: [
       { title: 'Web applications', text: 'Secure, scalable browser-based apps with user accounts, roles and real-time features.' },
       { title: 'CRM & ERP systems', text: 'Customer relationship and enterprise resource planning tools built for how your team works.' },
@@ -133,13 +147,19 @@ export const servicePages: ServicePage[] = [
     serviceType: 'Mobile application development',
     title: 'Mobile App Development Company in India | Namaste Soft',
     description:
-      'Android and iOS app development for startups and businesses across India, including Bengaluru. Native and cross-platform apps, from idea to store launch.',
+      'Build Android and iOS applications with Namaste Soft. We develop scalable, user-friendly mobile apps for startups and businesses, from idea to store launch.',
     h1: 'Mobile app development company',
     eyebrow: 'Android & iOS app development',
     intro: [
       'Your customers live on their phones. We design and develop Android and iOS apps for startups and businesses, with smooth, simple experiences people actually keep using.',
       'We help you decide between native and cross-platform development, design the user experience, build the app and its backend, and take it through to Play Store and App Store launch.'
     ],
+    problems: [
+      { title: 'Your service isn’t on customers’ phones', text: 'An app puts bookings, orders and updates one tap away, with push notifications to bring people back.' },
+      { title: 'Field teams working on paper', text: 'Business apps let staff record work on the move, with data synced to your systems.' },
+      { title: 'Apps that fail on a weak connection', text: 'We build offline storage and sync, so the app keeps working when the network drops.' }
+    ],
+    technologies: ['Kotlin', 'Java', 'Jetpack Compose', 'Android SDK', 'Flutter', 'Dart', 'Room & SQLite', 'Firebase Cloud Messaging', 'Google Maps'],
     offerings: [
       { title: 'Android apps', text: 'Apps built for the wide range of Android devices your customers use.' },
       { title: 'iOS apps', text: 'iPhone and iPad apps that follow Apple’s design and review guidelines.' },
@@ -182,15 +202,21 @@ export const servicePages: ServicePage[] = [
     slug: 'whatsapp-automation',
     name: 'WhatsApp automation',
     serviceType: 'WhatsApp Business automation',
-    title: 'WhatsApp Chatbot & Automation Services India | Namaste Soft',
+    title: 'WhatsApp Business Automation Services in India | Namaste Soft',
     description:
-      'WhatsApp automation and chatbots for businesses across India, including Bengaluru: auto-replies, lead capture, bookings and broadcasts. Free consultation.',
+      'Automate customer support, lead generation and business communication using WhatsApp Business API solutions from Namaste Soft, Bengaluru.',
     h1: 'WhatsApp automation & chatbot development',
     eyebrow: 'WhatsApp Business automation',
     intro: [
       'Your customers already message you on WhatsApp. We help businesses answer them instantly, any time of day, with automated replies, chatbots and workflows that capture leads and bookings without someone glued to the phone.',
       'We set up and build on the official WhatsApp Business Platform, connect it to your existing tools, and design conversations that feel helpful, not robotic.'
     ],
+    problems: [
+      { title: 'Messages go unanswered after hours', text: 'Automated replies answer common questions instantly, any time of day.' },
+      { title: 'Leads get lost in busy chats', text: 'Lead capture collects details and passes qualified enquiries to your team or CRM.' },
+      { title: 'Staff repeat the same answers all day', text: 'Chatbots and workflows handle routine questions so your team handles the rest.' }
+    ],
+    technologies: ['WhatsApp Business API', 'Instagram API', 'Facebook Messenger API', 'n8n', 'REST APIs', 'OpenAI API'],
     offerings: [
       { title: 'WhatsApp Business API setup', text: 'Get set up on the official WhatsApp Business Platform, with your number, profile and message templates in place.' },
       { title: 'WhatsApp chatbots', text: 'Instant answers to common questions, with buttons and menus that resolve queries end to end.' },
@@ -229,15 +255,21 @@ export const servicePages: ServicePage[] = [
     slug: 'ai-development-company',
     name: 'AI & ML solutions',
     serviceType: 'Artificial intelligence and machine learning development',
-    title: 'AI & Machine Learning Development Company India | Namaste Soft',
+    title: 'AI Development and Automation Company in India | Namaste Soft',
     description:
-      'AI solutions for businesses across India, including Bengaluru: OpenAI integration, AI chatbots, document processing, NLP and automation. Free consultation.',
-    h1: 'AI & machine learning development company',
+      'Build AI chatbots, intelligent automation, document processing and AI-powered business applications with Namaste Soft, using the OpenAI API.',
+    h1: 'AI development & automation company',
     eyebrow: 'AI & ML solutions',
     intro: [
       'AI is most useful when it solves a specific problem: answering customers faster, spotting patterns in your data, or taking repetitive work off your team. We build AI and machine learning solutions around the problem, not the hype.',
       'We start by checking whether AI is the right tool at all. Where it is, we design, build and integrate it into the software and processes you already use.'
     ],
+    problems: [
+      { title: 'Support answers the same questions', text: 'AI chatbots and assistants resolve routine questions on your website or WhatsApp.' },
+      { title: 'Hours lost to documents and data entry', text: 'AI document and data processing extracts and organises information automatically.' },
+      { title: 'Information that’s hard to find', text: 'Intelligent search helps staff and customers find answers in your own content.' }
+    ],
+    technologies: ['OpenAI API', 'Python', 'Natural language processing', 'n8n', 'REST APIs', 'PostgreSQL'],
     offerings: [
       { title: 'OpenAI API integration', text: 'Add GPT-powered features to your website, app or business software.' },
       { title: 'AI chatbots & assistants', text: 'Virtual assistants and AI customer support that answer questions on your website or WhatsApp.' },
@@ -274,13 +306,19 @@ export const servicePages: ServicePage[] = [
     serviceType: 'E-commerce website development',
     title: 'E-commerce Website Development Company in India | Namaste Soft',
     description:
-      'Custom e-commerce websites for businesses across India, including Bengaluru: catalogue, cart, checkout, payments, orders and admin dashboard. Free consultation.',
+      'Develop custom e-commerce websites with product catalogues, shopping carts, secure payments and order management with Namaste Soft, Bengaluru.',
     h1: 'E-commerce website development company',
     eyebrow: 'E-commerce development',
     intro: [
       'Sell your products online on a store you own. We build custom e-commerce websites with everything you need to take orders and run the store: catalogue, cart, checkout, online payments, order management and an admin dashboard.',
       'Your store is fast and mobile-friendly, built to be found on Google, and shaped around how you actually sell, not squeezed into a template.'
     ],
+    problems: [
+      { title: 'Selling only through social media', text: 'Your own store gives customers a proper catalogue, cart and checkout, on a site you control.' },
+      { title: 'Orders and stock tracked by hand', text: 'Order and inventory management keeps stock accurate as orders come in.' },
+      { title: 'Customers drop off at checkout', text: 'A simple checkout with UPI, cards, net banking and wallets makes paying easy.' }
+    ],
+    technologies: ['React.js', 'Next.js', 'PHP & Laravel', 'MySQL', 'Razorpay', 'Cashfree', 'Stripe'],
     offerings: [
       { title: 'Custom online stores', text: 'Shopping websites designed around your products, brand and customers.' },
       { title: 'Catalogue & categories', text: 'Product and category management with images, details, search and discovery.' },
@@ -315,15 +353,21 @@ export const servicePages: ServicePage[] = [
     slug: 'payment-gateway-integration',
     name: 'Payment gateway integration',
     serviceType: 'Payment gateway integration',
-    title: 'Payment Gateway Integration: Razorpay, Cashfree, Stripe | Namaste Soft',
+    title: 'Payment Gateway Integration Services in India | Namaste Soft',
     description:
-      'Razorpay, Cashfree, Stripe and UPI payment gateway integration for websites, mobile apps and business software in India. Subscriptions, webhooks and refunds.',
+      'Integrate Razorpay, Cashfree, Stripe and UPI payment solutions into your websites, mobile apps and business software, with subscriptions and refunds.',
     h1: 'Payment gateway integration services',
     eyebrow: 'Online payments',
     intro: [
       'Get paid online without the headaches. We integrate secure payment gateways into your website, mobile app or business software, so customers can pay by UPI, card, net banking or wallet.',
       'We handle the parts that are easy to get wrong: verifying payment status on the server, processing webhooks reliably, and managing refunds and recurring subscriptions.'
     ],
+    problems: [
+      { title: 'Customers want to pay online', text: 'Accept UPI, cards, net banking and wallets on your website, app or software.' },
+      { title: 'Orders confirmed without a real payment', text: 'Server-side verification and webhooks confirm an order only when payment succeeds.' },
+      { title: 'Chasing renewals by hand', text: 'Subscriptions and recurring payments collect automatically.' }
+    ],
+    technologies: ['Razorpay', 'Cashfree Payments', 'Stripe', 'UPI', 'Webhooks', 'REST APIs'],
     offerings: [
       { title: 'Razorpay integration', text: 'Checkout, payment links, subscriptions and webhooks with Razorpay.' },
       { title: 'Cashfree Payments', text: 'Cashfree checkout integrated into your website, app or platform.' },
@@ -358,15 +402,21 @@ export const servicePages: ServicePage[] = [
     slug: 'cloud-devops-services',
     name: 'Cloud, hosting & DevOps',
     serviceType: 'Cloud hosting and DevOps services',
-    title: 'Cloud Hosting, VPS & DevOps Services in India | Namaste Soft',
+    title: 'Cloud Hosting and DevOps Services | Namaste Soft',
     description:
-      'VPS and cloud server setup, Docker deployment, CI/CD, domain, DNS and SSL, and server maintenance for businesses across India. Free consultation.',
+      'Get cloud deployment, VPS hosting, Docker, CI/CD, server management, domain and SSL configuration services from Namaste Soft, Bengaluru.',
     h1: 'Cloud hosting & DevOps services',
     eyebrow: 'Cloud, hosting & DevOps',
     intro: [
       'Great software still needs a reliable home. We set up and manage the servers, deployments and infrastructure your applications run on, so they stay fast, secure and online.',
       'From a single VPS to Docker-based deployments with automatic CI/CD, we configure what your project actually needs and keep it maintained.'
     ],
+    problems: [
+      { title: 'Deployments are manual and risky', text: 'Git-based CI/CD makes releases repeatable, so a deploy is no longer a gamble.' },
+      { title: 'Domains, DNS and SSL misconfigured', text: 'We set up domains, DNS, Cloudflare and SSL certificates correctly.' },
+      { title: 'Servers set up once and never maintained', text: 'Ongoing server management, optimisation and updates keep applications reliable.' }
+    ],
+    technologies: ['Docker', 'Coolify', 'Portainer', 'Linux', 'Ubuntu', 'Hostinger VPS', 'Vercel', 'Cloudflare', 'Git-based CI/CD'],
     offerings: [
       { title: 'VPS & cloud servers', text: 'VPS and cloud server configuration, including Linux and Ubuntu server management.' },
       { title: 'Docker deployment', text: 'Containerised deployments managed with Docker, Coolify and Portainer.' },

@@ -156,7 +156,7 @@
           Tell us what you’re building. We’ll reply with honest advice and a clear plan.
         </p>
       </div>
-      <a href="#contact" class="btn btn-mari relative mt-8 shrink-0 lg:mt-0">
+      <a href="#contact" class="btn btn-mari relative mt-8 shrink-0 lg:mt-0" data-track="consultation_click">
         Get a free consultation
         <ArrowRight class="h-5 w-5" />
       </a>

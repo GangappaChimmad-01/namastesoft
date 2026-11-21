@@ -2,6 +2,8 @@
   import Logo from '$components/brand/Logo.svelte';
   import { config } from '@/lib/config';
   import { servicePages } from '@/lib/services';
+  import { products } from '@/lib/products';
+  import { posts } from '@/lib/blog';
 
   const year = new Date().getFullYear();
 
@@ -10,8 +12,9 @@
     { name: 'Services', href: '/#services' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'Products', href: '/products' },
+    ...(posts.length ? [{ name: 'Blog', href: '/blog' }] : []),
     { name: 'FAQ', href: '/#faq' },
-    { name: 'Contact', href: '/#contact' }
+    { name: 'Contact', href: '/contact' }
   ];
 </script>
 
@@ -31,6 +34,12 @@
         <ul class="mt-4 space-y-3 text-[0.95rem]">
           {#each servicePages as p}
             <li><a href="/{p.slug}" class="text-white/85 transition-colors hover:text-mari">{p.name}</a></li>
+          {/each}
+        </ul>
+        <h2 class="mt-8 font-mono text-xs uppercase tracking-wider text-mist">Products</h2>
+        <ul class="mt-4 space-y-3 text-[0.95rem]">
+          {#each products as p}
+            <li><a href="/products/{p.id}" class="text-white/85 transition-colors hover:text-mari">{p.name}</a></li>
           {/each}
         </ul>
       </nav>

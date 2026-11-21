@@ -2,6 +2,8 @@ import { config } from './config';
 import { profile, allTechnologies } from './profile';
 import { servicePages } from './services';
 import type { Project } from './projects';
+import type { Product } from './products';
+import type { Post } from './blog';
 
 const { siteUrl, company, social } = config;
 
@@ -50,7 +52,10 @@ export function organizationSchema() {
       areaServed: 'IN',
       availableLanguage: ['English']
     })),
-    sameAs: [`https://www.linkedin.com/${social.linkedin}`, `https://github.com/${social.github}`],
+    sameAs: [
+      social.linkedin && `https://www.linkedin.com/${social.linkedin}`,
+      social.github && `https://github.com/${social.github}`
+    ].filter(Boolean),
     knowsAbout: [...profile.capabilities.map((c) => c.name), ...allTechnologies],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
@@ -171,5 +176,75 @@ export function portfolioSchema(items: Project[]) {
         }
       };
     })
+  };
+}
+
+/**
+ * One of our software products. SoftwareApplication (not Product) is the accurate type for software, and
+ * no offers, prices or ratings are added because none are published.
+ */
+export function softwareApplicationSchema(p: Product) {
+  const page = absolute(`/products/${p.id}`);
+  const shots = (p.screenshots ?? []).map((s) => absolute(s.src));
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    '@id': `${page}#software`,
+    name: p.name,
+    description: p.overview.join(' '),
+    url: p.url,
+    mainEntityOfPage: page,
+    applicationCategory: p.category,
+    operatingSystem: p.operatingSystem,
+    featureList: p.features.map((f) => `${f.title}: ${f.text}`),
+    ...(shots.length ? { image: shots[0], screenshot: shots } : {}),
+    publisher: { '@id': ORG_ID },
+    creator: { '@id': ORG_ID }
+  };
+}
+
+export function contactPageSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${absolute('/contact')}#webpage`,
+    url: absolute('/contact'),
+    name: `Contact ${company.name}`,
+    inLanguage: 'en-IN',
+    isPartOf: { '@id': `${siteUrl}/#website` },
+    about: { '@id': ORG_ID }
+  };
+}
+
+export function blogPostingSchema(p: Post) {
+  const url = absolute(`/blog/${p.slug}`);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    mainEntityOfPage: url,
+    headline: p.title,
+    description: p.description,
+    datePublished: p.published,
+    dateModified: p.updated ?? p.published,
+    articleSection: p.category,
+    ...(p.tags?.length ? { keywords: p.tags.join(', ') } : {}),
+    image: absolute(p.image?.src ?? '/og-image.png'),
+    inLanguage: 'en-IN',
+    author: p.author ? { '@type': 'Person', name: p.author.name, ...(p.author.url ? { url: p.author.url } : {}) } : { '@id': ORG_ID },
+    publisher: { '@id': ORG_ID }
+  };
+}
+
+export function blogSchema(items: Post[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${absolute('/blog')}#blog`,
+    url: absolute('/blog'),
+    name: `${company.name} blog`,
+    inLanguage: 'en-IN',
+    publisher: { '@id': ORG_ID },
+    blogPost: items.map((p) => ({ '@type': 'BlogPosting', headline: p.title, url: absolute(`/blog/${p.slug}`), datePublished: p.published }))
   };
 }

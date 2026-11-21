@@ -22,8 +22,8 @@
 </script>
 
 <Seo
-  title="About Namaste Soft: Software Development Company in Bengaluru"
-  description="Namaste Soft is a Bengaluru software development company building websites, web apps, mobile apps, AI and automation. Our vision, mission, tech stack and process."
+  title="About Namaste Soft | Software Development Company in Bengaluru"
+  description="Learn about Namaste Soft, a Bengaluru software development company: our expertise, technologies, industries, projects and approach to building business solutions."
   path="/about"
   {schema}
 />
